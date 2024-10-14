@@ -14,7 +14,7 @@ const HomePage = () => {
       </div>
       <button
         className='bg-buttonColor text-white py-2 px-4 rounded-lg w-20 text-center'
-        onClick={() => router.push('/DateNightSelection')}
+        onClick={() => router.push('/datenightselection')}
       >
         Start
       </button>
