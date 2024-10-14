@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import HomePage from '@/onboarding/homepage/page'
+import Homepage from '@/components/Homepage'
 
 export default function Home() {
-  return <HomePage />
+  return <Homepage />
 }

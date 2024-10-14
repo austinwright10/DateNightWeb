@@ -13,7 +13,7 @@ const daysOfWeek = [
   { short: 'Sa', full: 'Saturday' },
 ]
 
-const DateNightSelectionScreen = () => {
+const DateNightSelection = () => {
   const router = useRouter()
   //   const selectedDay = useDayOfWeekStore((state) => state.day);
   //   const setSelectedDay = useDayOfWeekStore((state) => state.setDay);
@@ -64,4 +64,4 @@ const DateNightSelectionScreen = () => {
   )
 }
 
-export default DateNightSelectionScreen
+export default DateNightSelection
