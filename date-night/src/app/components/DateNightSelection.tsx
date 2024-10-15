@@ -1,7 +1,7 @@
-// pages/date-night-selection.tsx
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-//import { useDayOfWeekStore } from 'src/stores/store';
+'use client'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { dayOfWeekStore } from '@/app/stores/stores'
 
 const daysOfWeek = [
   { short: 'Su', full: 'Sunday' },
@@ -13,29 +13,28 @@ const daysOfWeek = [
   { short: 'Sa', full: 'Saturday' },
 ]
 
-const DateNightSelection = () => {
+export default function DateNightSelection() {
   const router = useRouter()
-  //   const selectedDay = useDayOfWeekStore((state) => state.day);
-  //   const setSelectedDay = useDayOfWeekStore((state) => state.setDay);
-  const [selectedDay, setSelectedDay] = useState('')
+  const selectedDay = dayOfWeekStore((state: any) => state.day)
+  const setSelectedDay = dayOfWeekStore((state: any) => state.setDay)
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day)
   }
 
   const handleContinue = () => {
-    router.push('/TravelAndPrice')
+    router.push('/onboarding/TravelAndPrice')
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-pink-200 p-5'>
+    <div className='flex flex-col items-center justify-center min-h-screen p-5'>
       <h1 className='text-3xl font-medium text-black mb-5'>Date Night</h1>
       <p className='text-lg text-gray-500 text-center mb-5 leading-relaxed'>
         Choose a day of the week that you&apos;d like to have your date night.
         You&apos;ll receive your date the morning of.
       </p>
 
-      <div className='flex justify-center space-x-3'>
+      <div className='flex justify-center justify-between space-x-10'>
         {daysOfWeek.map((day) => (
           <button
             key={day.short}
@@ -52,8 +51,8 @@ const DateNightSelection = () => {
       </div>
 
       <button
-        className={`mt-5 py-3 px-6 rounded-lg text-white ${
-          selectedDay ? 'bg-red-400' : 'bg-red-200 cursor-not-allowed'
+        className={`mt-5 py-3 px-6 rounded-lg text-white bg-buttonColor ${
+          selectedDay ? '' : 'cursor-not-allowed'
         }`}
         onClick={handleContinue}
         disabled={!selectedDay}
@@ -63,5 +62,3 @@ const DateNightSelection = () => {
     </div>
   )
 }
-
-export default DateNightSelection

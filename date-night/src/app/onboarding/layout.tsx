@@ -3,5 +3,5 @@ export default function OnboardLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <main className=''>{children}</main>
+  return <main className='bg-background'>{children}</main>
 }
