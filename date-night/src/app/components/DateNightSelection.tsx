@@ -1,6 +1,6 @@
-// pages/date-night-selection.tsx
+'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 //import { useDayOfWeekStore } from 'src/stores/store';
 
 const daysOfWeek = [
@@ -13,7 +13,7 @@ const daysOfWeek = [
   { short: 'Sa', full: 'Saturday' },
 ]
 
-const DateNightSelection = () => {
+export default function DateNightSelection() {
   const router = useRouter()
   //   const selectedDay = useDayOfWeekStore((state) => state.day);
   //   const setSelectedDay = useDayOfWeekStore((state) => state.setDay);
@@ -24,11 +24,11 @@ const DateNightSelection = () => {
   }
 
   const handleContinue = () => {
-    router.push('/TravelAndPrice')
+    router.push('/onboarding/TravelAndPrice')
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-pink-200 p-5'>
+    <div className='flex flex-col items-center justify-center min-h-screen p-5'>
       <h1 className='text-3xl font-medium text-black mb-5'>Date Night</h1>
       <p className='text-lg text-gray-500 text-center mb-5 leading-relaxed'>
         Choose a day of the week that you&apos;d like to have your date night.
@@ -52,8 +52,8 @@ const DateNightSelection = () => {
       </div>
 
       <button
-        className={`mt-5 py-3 px-6 rounded-lg text-white ${
-          selectedDay ? 'bg-red-400' : 'bg-red-200 cursor-not-allowed'
+        className={`mt-5 py-3 px-6 rounded-lg text-white bg-buttonColor ${
+          selectedDay ? '' : 'cursor-not-allowed'
         }`}
         onClick={handleContinue}
         disabled={!selectedDay}
@@ -63,5 +63,3 @@ const DateNightSelection = () => {
     </div>
   )
 }
-
-export default DateNightSelection
