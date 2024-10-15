@@ -25,7 +25,6 @@ export default function TravelAndPrice() {
             max={100}
             step={1}
             onValueChange={(value) => setSelectedPrice(value)}
-            //defaultValue={selectedPrice}
           />
         </div>
         <div className='w-1/3'>
@@ -38,12 +37,11 @@ export default function TravelAndPrice() {
             max={50}
             step={1}
             onValueChange={(value) => setSelectedTravel(value)}
-            // defaultValue={selectedTravel}
           />
         </div>
       </div>
       <button
-        className='mt-5 bg-red-400 text-white py-3 px-6 rounded-md'
+        className='mt-5 bg-buttonColor text-white py-3 px-6 rounded-md'
         onClick={() => router.push('/interest-selection')}
       >
         Continue
