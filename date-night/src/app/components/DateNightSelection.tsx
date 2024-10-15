@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-//import { useDayOfWeekStore } from 'src/stores/store';
+import { dayOfWeekStore } from '@/app/stores/stores'
 
 const daysOfWeek = [
   { short: 'Su', full: 'Sunday' },
@@ -15,9 +15,8 @@ const daysOfWeek = [
 
 export default function DateNightSelection() {
   const router = useRouter()
-  //   const selectedDay = useDayOfWeekStore((state) => state.day);
-  //   const setSelectedDay = useDayOfWeekStore((state) => state.setDay);
-  const [selectedDay, setSelectedDay] = useState('')
+  const selectedDay = dayOfWeekStore((state: any) => state.day)
+  const setSelectedDay = dayOfWeekStore((state: any) => state.setDay)
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day)
