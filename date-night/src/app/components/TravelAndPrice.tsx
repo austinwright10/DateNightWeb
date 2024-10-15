@@ -15,20 +15,20 @@ export default function TravelAndPrice() {
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-red-100 p-5'>
       <h1 className='text-3xl font-medium text-black mb-5'>Price and Travel</h1>
-      <div className='w-4/5 flex flex-col items-center'>
-        <div className='mb-10 w-full'>
+      <div className='w-3/5 flex flex-col items-center'>
+        <div className='mb-10 w-1/3'>
           <h2 className='text-xl text-gray-600 text-center mb-2'>
             What is your budget per date?
           </h2>
-          <p className='text-center text-lg'>${selectedPrice}</p>
-          <Slider value={selectedPrice} min={1} max={100} step={1} />
+          <p className='text-center text-lg mb-5'>${selectedPrice}</p>
+          <Slider min={1} max={100} step={1} />
         </div>
-        <div className='w-full'>
+        <div className='w-1/3'>
           <h2 className='text-xl text-gray-600 text-center mb-2'>
             How far are you willing to travel?
           </h2>
-          <p className='text-center text-lg'>{selectedTravel} mi.</p>
-          <Slider value={selectedTravel} min={0} max={50} step={1} />
+          <p className='text-center text-lg mb-5'>{selectedTravel} mi.</p>
+          <Slider min={0} max={50} step={1} />
         </div>
       </div>
       <button
