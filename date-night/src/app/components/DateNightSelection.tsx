@@ -35,7 +35,7 @@ export default function DateNightSelection() {
         You&apos;ll receive your date the morning of.
       </p>
 
-      <div className='flex justify-center space-x-3'>
+      <div className='flex justify-center justify-between space-x-10'>
         {daysOfWeek.map((day) => (
           <button
             key={day.short}
