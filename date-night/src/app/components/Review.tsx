@@ -9,7 +9,7 @@ export default function ReviewScreen() {
   const selectedPrice = priceStore((state: any) => state.price)
 
   const handleSignUp = () => {
-    router.push('/signup')
+    router.push('/onboarding/SignUpPage')
   }
 
   return (
@@ -18,7 +18,7 @@ export default function ReviewScreen() {
         Review Your Selections
       </h1>
 
-      <div className='bg-white p-6 rounded-lg shadow-md w-3/4 mb-5'>
+      <div className='bg-white p-6 rounded-lg shadow-md w-3/4 mb-5 md:w-1/2'>
         <div className='flex justify-between mb-3 border-b-2'>
           <span className='font-semibold text-lg text-gray-800'>
             Date Night:
@@ -42,7 +42,7 @@ export default function ReviewScreen() {
 
       <button
         onClick={handleSignUp}
-        className='bg-buttonColor text-white font-bold py-3 px-6 rounded-lg w-3/4'
+        className='bg-buttonColor text-white font-bold py-3 px-6 rounded-lg w-3/4 md:w-1/2'
       >
         Create Account
       </button>
