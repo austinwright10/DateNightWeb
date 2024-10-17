@@ -12,7 +12,7 @@ export default function TravelAndPrice() {
   const selectedTravel = travelStore((state: any) => state.travel)
   const setSelectedTravel = travelStore((state: any) => state.setTravel)
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-red-100 p-5'>
+    <div className='flex flex-col items-center justify-center min-h-screen p-5'>
       <h1 className='text-3xl font-medium text-black mb-5'>Price and Travel</h1>
       <div className='w-3/5 flex flex-col items-center'>
         <div className='mb-10 w-1/3'>
