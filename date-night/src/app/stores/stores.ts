@@ -1,10 +1,15 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-export const dayOfWeekStore = create((set) => ({
-  day: '',
-  setDay: (newDay: string) => set({ day: newDay }),
-}))
+export const dayOfWeekStore = create(
+  persist(
+    (set) => ({
+      day: '',
+      setDay: (newDay: string) => set({ day: newDay }),
+    }),
+    { name: 'day', storage: createJSONStorage(() => localStorage) }
+  )
+)
 
 export const priceStore = create(
   persist(

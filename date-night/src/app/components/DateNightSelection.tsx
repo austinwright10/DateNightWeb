@@ -20,13 +20,12 @@ export default function DateNightSelection() {
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day)
-    localStorage.setItem('day', day)
   }
 
-  useEffect(() => {
-    const day = localStorage.getItem('day')
-    setSelectedDay(day)
-  })
+  // useEffect(() => {
+  //   const day = localStorage.getItem('day')
+  //   setSelectedDay(day)
+  // })
 
   const handleContinue = () => {
     router.push('/onboarding/TravelAndPricePage')
