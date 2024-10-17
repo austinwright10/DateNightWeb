@@ -45,7 +45,7 @@ export default function TravelAndPrice() {
         </div>
       </div>
       <button
-        className='mt-5 bg-buttonColor text-white py-3 px-6 rounded-md'
+        className='mt-10 bg-buttonColor text-white py-3 px-6 rounded-md'
         onClick={() => router.push('/onboarding/InterestSelectionPage')}
       >
         Continue

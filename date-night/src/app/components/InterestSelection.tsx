@@ -61,7 +61,7 @@ export default function InterestSelection() {
         className={`mt-5 p-4 rounded-lg text-white text-lg ${
           selectedActivities.length === 0
             ? 'bg-red-300 cursor-not-allowed'
-            : 'bg-red-500'
+            : 'bg-buttonColor'
         }`}
         onClick={handleContinue}
         disabled={selectedActivities.length === 0}
