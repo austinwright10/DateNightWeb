@@ -19,17 +19,17 @@ export default function ReviewScreen() {
       </h1>
 
       <div className='bg-white p-6 rounded-lg shadow-md w-3/4 mb-5'>
-        <div className='flex justify-between mb-3'>
+        <div className='flex justify-between mb-3 border-b-2'>
           <span className='font-semibold text-lg text-gray-800'>
             Date Night:
           </span>
           <span className='text-lg text-gray-600'>{selectedDay}</span>
         </div>
-        <div className='flex justify-between mb-3'>
+        <div className='flex justify-between mb-3 border-b-2'>
           <span className='font-semibold text-lg text-gray-800'>Budget:</span>
           <span className='text-lg text-gray-600'>${selectedPrice}.00</span>
         </div>
-        <div className='flex justify-between mb-3'>
+        <div className='flex justify-between mb-3 border-b-2'>
           <span className='font-semibold text-lg text-gray-800'>Distance:</span>
           <span className='text-lg text-gray-600'>{selectedTravel} mi.</span>
         </div>
