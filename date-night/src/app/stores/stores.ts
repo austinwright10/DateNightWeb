@@ -12,7 +12,10 @@ export const priceStore = create(
       price: 0,
       setPrice: (newPrice: number) => set({ price: newPrice }),
     }),
-    { name: 'price', storage: createJSONStorage(() => localStorage) }
+    {
+      name: 'price',
+      storage: createJSONStorage(() => localStorage),
+    }
   )
 )
 

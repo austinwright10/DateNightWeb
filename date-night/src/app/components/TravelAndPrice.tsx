@@ -1,11 +1,13 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { priceStore, travelStore } from '@/app/stores/stores'
 import { Slider } from '@/components/ui/slider'
 
 export default function TravelAndPrice() {
   const router = useRouter()
+
+  useEffect(() => {})
 
   const selectedPrice = priceStore((state: any) => state.price)
   const setSelectedPrice = priceStore((state: any) => state.setPrice)
@@ -24,6 +26,7 @@ export default function TravelAndPrice() {
             min={1}
             max={100}
             step={1}
+            value={selectedPrice}
             onValueChange={(value) => setSelectedPrice(value)}
           />
         </div>
@@ -36,6 +39,7 @@ export default function TravelAndPrice() {
             min={0}
             max={50}
             step={1}
+            value={selectedTravel}
             onValueChange={(value) => setSelectedTravel(value)}
           />
         </div>
