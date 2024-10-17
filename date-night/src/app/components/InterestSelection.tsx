@@ -33,7 +33,7 @@ export default function InterestSelection() {
   )
 
   const handleContinue = () => {
-    router.push('/review')
+    router.push('/onboarding/ReviewPage')
   }
 
   return (
