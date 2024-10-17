@@ -26,7 +26,7 @@ export default function TravelAndPrice() {
             min={1}
             max={100}
             step={1}
-            value={selectedPrice}
+            value={[selectedPrice]}
             onValueChange={(value) => setSelectedPrice(value)}
           />
         </div>
@@ -39,7 +39,7 @@ export default function TravelAndPrice() {
             min={0}
             max={50}
             step={1}
-            value={selectedTravel}
+            value={[selectedTravel]}
             onValueChange={(value) => setSelectedTravel(value)}
           />
         </div>
