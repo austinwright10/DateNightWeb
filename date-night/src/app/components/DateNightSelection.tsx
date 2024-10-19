@@ -57,7 +57,7 @@ export default function DateNightSelection() {
 
       <button
         className={`mt-5 py-3 px-6 rounded-lg text-white bg-buttonColor ${
-          selectedDay ? '' : 'cursor-not-allowed'
+          selectedDay ? ' bg-buttonColor' : 'bg-red-300 cursor-not-allowed'
         }`}
         onClick={handleContinue}
         disabled={!selectedDay}

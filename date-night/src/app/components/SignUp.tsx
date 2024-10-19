@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { z } from 'zod'
 import debounce from 'lodash/debounce'
 //import OTPModal from '../components/OTPModal'
-import { supabase } from '@/lib/client'
+//import { supabase } from '@/utils/supabase/client'
 import {
   dayOfWeekStore,
   interestStore,
@@ -194,7 +194,7 @@ export default function SignUp({ router }: any) {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-red-200'>
+    <div className='flex flex-col items-center justify-center min-h-screen bg-background w-screen'>
       {/* <OTPModal
         handleModalVisibility={handleModalVisibility}
         isVisible={isModalVisible}
@@ -204,12 +204,12 @@ export default function SignUp({ router }: any) {
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
       </h1>
-      <div className='w-full max-w-md space-y-4'>
-        <div className='flex space-x-2'>
+      <div className='w-5/12 space-y-4'>
+        <div className='flex w-full gap-10'>
           <input
             type='text'
             placeholder='First Name'
-            className={`w-1/2 p-4 bg-white rounded-md ${
+            className={`w-full p-4 bg-white rounded-lg ${
               firstNameError && 'border-2 border-red-500'
             }`}
             value={firstName}
@@ -219,7 +219,7 @@ export default function SignUp({ router }: any) {
           <input
             type='text'
             placeholder='Last Name'
-            className={`w-1/2 p-4 bg-white rounded-md ${
+            className={`w-full p-4 bg-white rounded-lg ${
               lastNameError && 'border-2 border-red-500'
             }`}
             value={lastName}
@@ -227,21 +227,22 @@ export default function SignUp({ router }: any) {
             disabled={isClicked}
           />
         </div>
-        {firstNameError && (
-          <p className='text-red-500 text-sm'>
-            *First name needs to be longer than 2 characters
-          </p>
-        )}
-        {lastNameError && (
-          <p className='text-red-500 text-sm'>
-            *Last name needs to be longer than 2 characters
-          </p>
-        )}
-
+        <div className='flex w-full gap-10 h-1'>
+          {firstNameError && (
+            <p className='text-red-500 text-xs'>
+              *First name needs to be longer than 2 characters
+            </p>
+          )}
+          {lastNameError && (
+            <p className='text-red-500 text-xs'>
+              *Last name needs to be longer than 2 characters
+            </p>
+          )}
+        </div>
         <input
           type='text'
           placeholder='Phone Number'
-          className={`w-full p-4 bg-white rounded-md ${
+          className={`w-full p-4 bg-white rounded-lg ${
             phoneError && 'border-2 border-red-500'
           }`}
           value={phoneNumber}
@@ -257,14 +258,14 @@ export default function SignUp({ router }: any) {
         <input
           type='text'
           placeholder='City (e.g. New York, NY)'
-          className={`w-full p-4 bg-white rounded-md ${
+          className={`w-full p-4 bg-white rounded-lg ${
             locationError && 'border-2 border-red-500'
           }`}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         {citySuggestions.length > 0 && (
-          <div className='bg-white rounded-md mt-1'>
+          <div className='bg-white rounded-lg mt-1'>
             {citySuggestions.map((suggestion) => (
               <div
                 key={suggestion}
@@ -284,7 +285,7 @@ export default function SignUp({ router }: any) {
         <input
           type='password'
           placeholder='Password'
-          className={`w-full p-4 bg-white rounded-md ${
+          className={`w-full p-4 bg-white rounded-lg ${
             passwordError && 'border-2 border-red-500'
           }`}
           value={password}
@@ -300,7 +301,7 @@ export default function SignUp({ router }: any) {
         <input
           type='password'
           placeholder='Confirm Password'
-          className={`w-full p-4 bg-white rounded-md ${
+          className={`w-full p-4 bg-white rounded-lg ${
             confirmPasswordError && 'border-2 border-red-500'
           }`}
           value={confirmPassword}
@@ -312,7 +313,7 @@ export default function SignUp({ router }: any) {
         )}
 
         <button
-          className='w-full p-4 bg-buttonColor text-white rounded-md mt-4'
+          className='w-full p-4 bg-buttonColor text-white rounded-lg mt-4'
           onClick={handleSignUp}
           disabled={isClicked}
         >
