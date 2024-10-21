@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { z } from 'zod'
 import debounce from 'lodash/debounce'
 //import OTPModal from '../components/OTPModal'
-//import { supabase } from '@/utils/supabase/client'
+import { supabase } from '@/utils/supabase/client'
 import {
   dayOfWeekStore,
   interestStore,
@@ -74,6 +74,23 @@ export default function SignUp({ router }: any) {
         confirmPassword,
       }
       signUpSchema.parse(formData)
+      const onboardData = {
+        selectedDay,
+        selectedPrice,
+        selectedTravel,
+        interests,
+      }
+      const onboardJSON = JSON.stringify(onboardData)
+      const { data, error: insertError } = await supabase
+        .from('users')
+        .insert({
+          first_name: firstName,
+          last_name: lastName,
+          phone_number: formatPhoneNumber(phoneNumber),
+          location: location,
+          onboard: onboardJSON,
+        })
+        .select('id')
       resetErrors()
       setIsModalVisible(true)
     } catch (error: any) {
@@ -170,7 +187,7 @@ export default function SignUp({ router }: any) {
       const onboardJSON = JSON.stringify(onboardData)
 
       const { data, error: insertError } = await supabase
-        .from('registered_users')
+        .from('users')
         .insert({
           first_name: firstName,
           last_name: lastName,
