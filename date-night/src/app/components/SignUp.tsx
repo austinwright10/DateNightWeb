@@ -25,7 +25,6 @@ export default function SignUp({ router }: any) {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
   const [location, setLocation] = useState('')
   const [locationError, setLocationError] = useState(false)
-  const [isClicked, setIsClicked] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [citySuggestions, setCitySuggestions] = useState<string[]>([])
   const [query, setQuery] = useState('')
@@ -74,23 +73,6 @@ export default function SignUp({ router }: any) {
         confirmPassword,
       }
       signUpSchema.parse(formData)
-      const onboardData = {
-        selectedDay,
-        selectedPrice,
-        selectedTravel,
-        interests,
-      }
-      const onboardJSON = JSON.stringify(onboardData)
-      const { data, error: insertError } = await supabase
-        .from('users')
-        .insert({
-          first_name: firstName,
-          last_name: lastName,
-          phone_number: formatPhoneNumber(phoneNumber),
-          location: location,
-          onboard: onboardJSON,
-        })
-        .select('id')
       resetErrors()
       setIsModalVisible(true)
     } catch (error: any) {
@@ -103,9 +85,9 @@ export default function SignUp({ router }: any) {
       if (zodErrors.includes('lastName')) {
         setLastNameError(true)
       }
-      if (!locationRegex.test(location)) {
-        setLocationError(true)
-      }
+      // if (!locationRegex.test(location)) {
+      //   setLocationError(true)
+      // }
       if (zodErrors.includes('phoneNumber') || !phoneRegex.test(phoneNumber)) {
         setPhoneError(true)
       }
@@ -231,7 +213,6 @@ export default function SignUp({ router }: any) {
             }`}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            disabled={isClicked}
           />
           <input
             type='text'
@@ -241,7 +222,6 @@ export default function SignUp({ router }: any) {
             }`}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            disabled={isClicked}
           />
         </div>
         <div className='flex w-full gap-10 h-1'>
@@ -264,7 +244,6 @@ export default function SignUp({ router }: any) {
           }`}
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
-          disabled={isClicked}
         />
         {phoneError && (
           <p className='text-red-500 text-sm'>
@@ -307,7 +286,6 @@ export default function SignUp({ router }: any) {
           }`}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          disabled={isClicked}
         />
         {passwordError && (
           <p className='text-red-500 text-sm'>
@@ -323,7 +301,6 @@ export default function SignUp({ router }: any) {
           }`}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          disabled={isClicked}
         />
         {confirmPasswordError && (
           <p className='text-red-500 text-sm'>*Passwords do not match</p>
@@ -331,8 +308,7 @@ export default function SignUp({ router }: any) {
 
         <button
           className='w-full p-4 bg-buttonColor text-white rounded-lg mt-4'
-          onClick={handleSignUp}
-          disabled={isClicked}
+          onClick={goNext}
         >
           Create Account
         </button>
