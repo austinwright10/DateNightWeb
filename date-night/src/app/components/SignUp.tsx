@@ -224,18 +224,16 @@ export default function SignUp({ router }: any) {
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <div className='flex w-full gap-10 h-1'>
-          {firstNameError && (
-            <p className='text-red-500 text-xs'>
-              *First name needs to be longer than 2 characters
-            </p>
-          )}
-          {lastNameError && (
-            <p className='text-red-500 text-xs'>
-              *Last name needs to be longer than 2 characters
-            </p>
-          )}
-        </div>
+        {(firstNameError || lastNameError) && (
+          <div className='flex flex-row text-red-500 text-xs mt-2 justify-between'>
+            {firstNameError && (
+              <p>*First name needs to be longer than 2 characters</p>
+            )}
+            {lastNameError && (
+              <p>*Last name needs to be longer than 2 characters</p>
+            )}
+          </div>
+        )}
         <input
           type='text'
           placeholder='Phone Number'
@@ -246,7 +244,7 @@ export default function SignUp({ router }: any) {
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
         {phoneError && (
-          <p className='text-red-500 text-sm'>
+          <p className='text-red-500 text-xs'>
             *Phone Number should be 10 digits
           </p>
         )}
@@ -288,7 +286,7 @@ export default function SignUp({ router }: any) {
           onChange={(e) => setPassword(e.target.value)}
         />
         {passwordError && (
-          <p className='text-red-500 text-sm'>
+          <p className='text-red-500 text-xs'>
             *Password needs to be longer than 6 characters
           </p>
         )}
@@ -303,12 +301,12 @@ export default function SignUp({ router }: any) {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         {confirmPasswordError && (
-          <p className='text-red-500 text-sm'>*Passwords do not match</p>
+          <p className='text-red-500 text-xs'>*Passwords do not match</p>
         )}
 
         <button
           className='w-full p-4 bg-buttonColor text-white rounded-lg mt-4'
-          onClick={goNext}
+          onClick={handleSignUp}
         >
           Create Account
         </button>
