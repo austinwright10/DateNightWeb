@@ -1,5 +1,6 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
+import Modal from '@/app/components/Modal'
 import { z } from 'zod'
 import debounce from 'lodash/debounce'
 //import OTPModal from '../components/OTPModal'
@@ -200,6 +201,7 @@ export default function SignUp({ router }: any) {
         phoneNumber={phoneNumber}
         next={goNext}
       /> */}
+      <Modal />
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
       </h1>

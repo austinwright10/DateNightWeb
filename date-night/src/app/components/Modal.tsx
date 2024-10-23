@@ -11,7 +11,11 @@ export default function Modal() {
   return (
     <Dialog>
       <DialogTrigger>Open</DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        onInteractOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
