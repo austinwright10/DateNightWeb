@@ -1,5 +1,6 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
+import Modal from '@/app/components/Modal'
 import { z } from 'zod'
 import debounce from 'lodash/debounce'
 //import OTPModal from '../components/OTPModal'
@@ -40,7 +41,7 @@ export default function SignUp({ router }: any) {
     .object({
       firstName: z.string().min(2),
       lastName: z.string().min(2),
-      location: z.string().min(2),
+      //location: z.string().min(2),
       phoneNumber: z.string().min(10),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
@@ -75,6 +76,7 @@ export default function SignUp({ router }: any) {
       signUpSchema.parse(formData)
       resetErrors()
       setIsModalVisible(true)
+      console.log('clicked ')
     } catch (error: any) {
       const zodErrors = error.errors.map((err: any) => err.path[0])
       resetErrors()
@@ -174,7 +176,7 @@ export default function SignUp({ router }: any) {
           first_name: firstName,
           last_name: lastName,
           phone_number: formatPhoneNumber(phoneNumber),
-          location: location,
+          location: '',
           onboard: onboardJSON,
         })
         .select('id')
@@ -200,6 +202,7 @@ export default function SignUp({ router }: any) {
         phoneNumber={phoneNumber}
         next={goNext}
       /> */}
+      <Modal isOpen={isModalVisible} />
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
       </h1>
@@ -249,7 +252,7 @@ export default function SignUp({ router }: any) {
           </p>
         )}
 
-        <input
+        {/* <input
           type='text'
           placeholder='City (e.g. New York, NY)'
           className={`w-full p-4 bg-white rounded-lg ${
@@ -274,7 +277,7 @@ export default function SignUp({ router }: any) {
               </div>
             ))}
           </div>
-        )}
+        )} */}
 
         <input
           type='password'
