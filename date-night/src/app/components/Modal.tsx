@@ -7,10 +7,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-export default function Modal() {
+export default function Modal({ isOpen }: { isOpen: boolean }) {
   return (
-    <Dialog>
-      <DialogTrigger>Open</DialogTrigger>
+    <Dialog open={isOpen}>
+      {/* <DialogTrigger asChild>
+        <button className='hidden'>Open Modal</button>
+      </DialogTrigger> */}
       <DialogContent
         onInteractOutside={(e) => {
           e.preventDefault()
