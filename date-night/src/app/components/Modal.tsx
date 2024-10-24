@@ -7,7 +7,27 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-export default function Modal({ isOpen }: { isOpen: boolean }) {
+export default function Modal({
+  isOpen,
+  phoneNumber,
+  onBack,
+  onContinue,
+}: {
+  isOpen: boolean
+  phoneNumber: string
+  onBack: () => void
+  onContinue: () => void
+}) {
+  function formatPhoneNumber(phoneNumber: string): string {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, '')
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+
+    if (match) {
+      return `(${match[1]})-${match[2]}-${match[3]}`
+    }
+
+    return phoneNumber
+  }
   return (
     <Dialog open={isOpen}>
       {/* <DialogTrigger asChild>
@@ -19,10 +39,26 @@ export default function Modal({ isOpen }: { isOpen: boolean }) {
         }}
       >
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Confirm your number</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <div className='flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 space-y-6'>
+              <p className='text-center text-gray-700 text-lg'>
+                {formatPhoneNumber(phoneNumber)} is the number we have. If
+                correct, press continue.
+              </p>
+              <button
+                onClick={onContinue}
+                className='w-full py-3 px-4 bg-buttonColor text-white font-medium rounded-lg transition-colors'
+              >
+                Continue
+              </button>
+              <button
+                onClick={onBack}
+                className='w-full px-4 bg-none text-gray-700 font-medium rounded-lg transition-colors'
+              >
+                Back
+              </button>
+            </div>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
