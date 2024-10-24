@@ -39,7 +39,7 @@ export default function Modal({
         }}
       >
         <DialogHeader>
-          <DialogTitle>Confirm your number</DialogTitle>
+          <DialogTitle className='text-xl'>Confirm Your Number</DialogTitle>
           <DialogDescription>
             <div className='flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 space-y-6'>
               <p className='text-center text-gray-700 text-lg'>
