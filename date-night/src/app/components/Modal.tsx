@@ -48,13 +48,13 @@ export default function Modal({
               </p>
               <button
                 onClick={onContinue}
-                className='w-full py-3 px-4 bg-buttonColor text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                className='w-full py-3 px-4 bg-buttonColor text-white font-medium rounded-lg transition-colors'
               >
                 Continue
               </button>
               <button
                 onClick={onBack}
-                className='w-full px-4 bg-none text-gray-700 font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                className='w-full px-4 bg-none text-gray-700 font-medium rounded-lg transition-colors'
               >
                 Back
               </button>

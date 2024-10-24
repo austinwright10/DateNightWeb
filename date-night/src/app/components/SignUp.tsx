@@ -75,11 +75,10 @@ export default function SignUp({ router }: any) {
       }
       signUpSchema.parse(formData)
       resetErrors()
-      // setIsModalVisible(true)
+      setIsModalVisible(true)
       console.log('clicked ')
     } catch (error: any) {
       const zodErrors = error.errors.map((err: any) => err.path[0])
-      setIsModalVisible(true)
       resetErrors()
 
       if (zodErrors.includes('firstName')) {
@@ -101,10 +100,6 @@ export default function SignUp({ router }: any) {
         setConfirmPasswordError(true)
       }
     }
-  }
-
-  const handleModalVisibility = (isVisible: boolean) => {
-    setIsModalVisible(isVisible)
   }
 
   const fetchCities = async (query: string) => {
@@ -206,7 +201,7 @@ export default function SignUp({ router }: any) {
       <Modal
         isOpen={isModalVisible}
         onBack={() => setIsModalVisible(false)}
-        onContinue={() => setIsModalVisible(false)}
+        onContinue={goNext}
         phoneNumber={phoneNumber}
       />
       <h1 className='text-2xl font-medium text-black mb-4'>
