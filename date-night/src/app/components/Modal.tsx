@@ -17,6 +17,7 @@ export default function Modal({ isOpen }: { isOpen: boolean }) {
         onInteractOutside={(e) => {
           e.preventDefault()
         }}
+        className='w-'
       >
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
