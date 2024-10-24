@@ -75,10 +75,11 @@ export default function SignUp({ router }: any) {
       }
       signUpSchema.parse(formData)
       resetErrors()
-      setIsModalVisible(true)
+      // setIsModalVisible(true)
       console.log('clicked ')
     } catch (error: any) {
       const zodErrors = error.errors.map((err: any) => err.path[0])
+      setIsModalVisible(true)
       resetErrors()
 
       if (zodErrors.includes('firstName')) {
@@ -202,7 +203,12 @@ export default function SignUp({ router }: any) {
         phoneNumber={phoneNumber}
         next={goNext}
       /> */}
-      <Modal isOpen={isModalVisible} />
+      <Modal
+        isOpen={isModalVisible}
+        onBack={() => setIsModalVisible(false)}
+        onContinue={() => setIsModalVisible(false)}
+        phoneNumber={phoneNumber}
+      />
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
       </h1>
