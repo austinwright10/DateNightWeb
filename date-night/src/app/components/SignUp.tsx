@@ -12,6 +12,7 @@ import {
   travelStore,
   userIDStore,
 } from '@/app/stores/stores'
+import PhoneInput from '@/app/components/PhoneInput'
 
 export default function SignUp({ router }: any) {
   const [firstName, setFirstName] = useState('')
@@ -61,7 +62,7 @@ export default function SignUp({ router }: any) {
   }
 
   const locationRegex = /^([A-Za-z\s]+),\s*([A-Z]{2})$/
-  const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+  const phoneRegex = /^[0-9]{10}$/
 
   const handleSignUp = async () => {
     try {
@@ -207,7 +208,7 @@ export default function SignUp({ router }: any) {
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
       </h1>
-      <div className='w-5/12 space-y-4'>
+      <div className='sm:w-5/12 w-9/12 space-y-4'>
         <div className='flex w-full gap-10'>
           <input
             type='text'
@@ -238,14 +239,10 @@ export default function SignUp({ router }: any) {
             )}
           </div>
         )}
-        <input
-          type='text'
-          placeholder='Phone Number'
-          className={`w-full p-4 bg-white rounded-lg ${
-            phoneError && 'border-2 border-red-500'
-          }`}
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+        <PhoneInput
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
+          error={phoneError}
         />
         {phoneError && (
           <p className='text-red-500 text-xs'>
