@@ -63,17 +63,20 @@ export default function Modal({
               >
                 Back
               </button> */}
-              <InputOTP maxLength={6} value={value}>
-                <InputOTPGroup>
-                  <InputOTPSlot index={0} className='border-1 border-black' />
-                  <InputOTPSlot index={1} className='border-1 border-black' />
-                  <InputOTPSlot index={2} className='border-1 border-black' />
-                </InputOTPGroup>
-                <InputOTPSeparator />
-                <InputOTPGroup>
-                  <InputOTPSlot index={3} className='border-1 border-black' />
-                  <InputOTPSlot index={4} className='border-1 border-black' />
-                  <InputOTPSlot index={5} className='border-1 border-black' />
+              <InputOTP
+                maxLength={6}
+                value={value}
+                onChange={(value) => setValue(value)}
+                className='text-black'
+              >
+                <InputOTPGroup className='flex'>
+                  {[...Array(6)].map((_, index) => (
+                    <InputOTPSlot
+                      key={index}
+                      index={index}
+                      className='border border-black text-black w-12 h-12 text-center'
+                    />
+                  ))}
                 </InputOTPGroup>
               </InputOTP>
             </div>
