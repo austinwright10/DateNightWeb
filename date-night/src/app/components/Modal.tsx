@@ -43,38 +43,22 @@ export default function Modal({
           e.preventDefault()
         }}
       >
+        <DialogTitle className='text-xl'>Confirm Your Number</DialogTitle>
         <DialogHeader>
-          <DialogTitle className='text-xl'>Confirm Your Number</DialogTitle>
           <DialogDescription>
-            <div className='flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 space-y-6'>
-              {/* <p className='text-center text-gray-700 text-lg'>
-                {formatPhoneNumber(phoneNumber)} is the number we have. If
-                correct, press continue.
-              </p>
-              <button
-                onClick={onContinue}
-                className='w-full py-3 px-4 bg-buttonColor text-white font-medium rounded-lg transition-colors'
-              >
-                Continue
-              </button>
-              <button
-                onClick={onBack}
-                className='w-full px-4 bg-none text-gray-700 font-medium rounded-lg transition-colors'
-              >
-                Back
-              </button> */}
+            <div className='flex flex-col items-center justify-center justify-between w-full max-w-md mx-auto p-6 space-y-6'>
               <InputOTP
                 maxLength={6}
                 value={value}
                 onChange={(value) => setValue(value)}
-                className='text-black'
+                className='text-black w-full'
               >
-                <InputOTPGroup className='flex'>
+                <InputOTPGroup className='flex w-full'>
                   {[...Array(6)].map((_, index) => (
                     <InputOTPSlot
                       key={index}
                       index={index}
-                      className='border border-black text-black w-12 h-12 text-center'
+                      className='border border-black text-black w-full h-16 w-16 text-center text-xl'
                     />
                   ))}
                 </InputOTPGroup>
