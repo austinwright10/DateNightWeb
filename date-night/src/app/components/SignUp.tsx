@@ -146,17 +146,6 @@ export default function SignUp({ router }: any) {
     debouncedFetchCities(query)
   }, [query])
 
-  function formatPhoneNumber(phoneNumber: string): string {
-    const cleaned = ('' + phoneNumber).replace(/\D/g, '')
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-
-    if (match) {
-      return `(${match[1]})-${match[2]}-${match[3]}`
-    }
-
-    return phoneNumber
-  }
-
   async function goNext() {
     try {
       const onboardData = {
@@ -167,23 +156,31 @@ export default function SignUp({ router }: any) {
       }
       const onboardJSON = JSON.stringify(onboardData)
 
-      const { data, error: insertError } = await supabase
-        .from('users')
-        .insert({
-          first_name: firstName,
-          last_name: lastName,
-          phone_number: formatPhoneNumber(phoneNumber),
-          location: '',
-          onboard: onboardJSON,
-        })
-        .select('id')
+      // const { data, error: insertError } = await supabase
+      //   .from('users')
+      //   .insert({
+      //     first_name: firstName,
+      //     last_name: lastName,
+      //     phone_number: formatPhoneNumber(phoneNumber),
+      //     location: '',
+      //     onboard: onboardJSON,
+      //   })
+      //   .select('id')
+      const { data, error } = await supabase.auth.signInWithOtp({
+        phone: phoneNumber,
+      })
+      if (error) {
+        throw error.message
+      } else {
+        console.log(data)
+      }
 
-      if (insertError) {
-        throw insertError
-      }
-      if (data) {
-        setID(data)
-      }
+      // if (insertError) {
+      //   throw insertError
+      // }
+      // if (data) {
+      //   setID(data)
+      // }
       setIsModalVisible(false)
       router.push('/paywall')
     } catch (error: any) {
@@ -193,12 +190,6 @@ export default function SignUp({ router }: any) {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-background w-screen'>
-      {/* <OTPModal
-        handleModalVisibility={handleModalVisibility}
-        isVisible={isModalVisible}
-        phoneNumber={phoneNumber}
-        next={goNext}
-      /> */}
       <Modal
         isOpen={isModalVisible}
         onBack={() => setIsModalVisible(false)}

@@ -12,7 +12,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Modal({
   isOpen,
@@ -36,6 +36,11 @@ export default function Modal({
     return phoneNumber
   }
   const [value, setValue] = useState('')
+  useEffect(() => {
+    if (value.length === 6) {
+      onContinue() // Call the onContinue function when 6 digits are typed
+    }
+  }, [value, onContinue])
   return (
     <Dialog open={isOpen}>
       <DialogContent
