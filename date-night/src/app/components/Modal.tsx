@@ -6,6 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
+import { useEffect, useState } from 'react'
 
 export default function Modal({
   isOpen,
@@ -28,36 +35,41 @@ export default function Modal({
 
     return phoneNumber
   }
+  const [value, setValue] = useState('')
+  useEffect(() => {
+    if (value.length === 6) {
+      onContinue()
+    }
+  }, [value, onContinue])
   return (
     <Dialog open={isOpen}>
-      {/* <DialogTrigger asChild>
-        <button className='hidden'>Open Modal</button>
-      </DialogTrigger> */}
       <DialogContent
         onInteractOutside={(e) => {
           e.preventDefault()
         }}
       >
+        <DialogTitle className='text-xl'>Confirm Your Number</DialogTitle>
         <DialogHeader>
-          <DialogTitle className='text-xl'>Confirm Your Number</DialogTitle>
+          <p className='text-left'>
+            We sent a 6 digit code to {formatPhoneNumber(phoneNumber)}.
+          </p>
           <DialogDescription>
-            <div className='flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 space-y-6'>
-              <p className='text-center text-gray-700 text-lg'>
-                {formatPhoneNumber(phoneNumber)} is the number we have. If
-                correct, press continue.
-              </p>
-              <button
-                onClick={onContinue}
-                className='w-full py-3 px-4 bg-buttonColor text-white font-medium rounded-lg transition-colors'
+            <div className='flex flex-col md:w-3/4 w-full max-w-md mx-auto m-3 space-y-6'>
+              <InputOTP
+                maxLength={6}
+                value={value}
+                onChange={(value) => setValue(value)}
               >
-                Continue
-              </button>
-              <button
-                onClick={onBack}
-                className='w-full px-4 bg-none text-gray-700 font-medium rounded-lg transition-colors'
-              >
-                Back
-              </button>
+                <InputOTPGroup className='flex w-full justify-center'>
+                  {[...Array(6)].map((_, index) => (
+                    <InputOTPSlot
+                      key={index}
+                      index={index}
+                      className='border border-black text-black w-full h-16 text-center text-xl'
+                    />
+                  ))}
+                </InputOTPGroup>
+              </InputOTP>
             </div>
           </DialogDescription>
         </DialogHeader>

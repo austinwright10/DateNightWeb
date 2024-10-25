@@ -58,9 +58,7 @@ const PhoneInputWithCountry = ({
                 <div className='flex items-center gap-2'>
                   <span>{country.flag}</span>
                   <span className='font-medium'>{country.code}</span>
-                  <span className='text-gray-500 text-sm'>
-                    {country.country}
-                  </span>
+                  <span className='text-sm'>{country.country}</span>
                 </div>
               </SelectItem>
             ))}

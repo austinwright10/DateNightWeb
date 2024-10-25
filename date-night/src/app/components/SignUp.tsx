@@ -43,7 +43,7 @@ export default function SignUp({ router }: any) {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       //location: z.string().min(2),
-      phoneNumber: z.string().min(10),
+      phoneNumber: z.string().min(10).max(10),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
     })
@@ -76,9 +76,29 @@ export default function SignUp({ router }: any) {
       }
       signUpSchema.parse(formData)
       resetErrors()
+      const onboardJSON = JSON.stringify(formData)
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        phone: phoneNumber,
+        password: password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            phone_number: phoneNumber,
+            location: '',
+            onboard: onboardJSON,
+          },
+        },
+      })
+      if (signUpError) {
+        console.log('sign up error ', signUpError)
+      } else {
+        console.log('worked')
+      }
+
       setIsModalVisible(true)
-      console.log('clicked ')
     } catch (error: any) {
+      console.log('error ', error.errors)
       const zodErrors = error.errors.map((err: any) => err.path[0])
       resetErrors()
 
@@ -146,17 +166,6 @@ export default function SignUp({ router }: any) {
     debouncedFetchCities(query)
   }, [query])
 
-  function formatPhoneNumber(phoneNumber: string): string {
-    const cleaned = ('' + phoneNumber).replace(/\D/g, '')
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-
-    if (match) {
-      return `(${match[1]})-${match[2]}-${match[3]}`
-    }
-
-    return phoneNumber
-  }
-
   async function goNext() {
     try {
       const onboardData = {
@@ -167,23 +176,37 @@ export default function SignUp({ router }: any) {
       }
       const onboardJSON = JSON.stringify(onboardData)
 
-      const { data, error: insertError } = await supabase
-        .from('users')
-        .insert({
-          first_name: firstName,
-          last_name: lastName,
-          phone_number: formatPhoneNumber(phoneNumber),
-          location: '',
-          onboard: onboardJSON,
-        })
-        .select('id')
+      // const { data, error: insertError } = await supabase
+      //   .from('users')
+      //   .insert({
+      //     first_name: firstName,
+      //     last_name: lastName,
+      //     phone_number: formatPhoneNumber(phoneNumber),
+      //     location: '',
+      //     onboard: onboardJSON,
+      //   })
+      //   .select('id')
+      const { data, error } = await supabase.auth.signInWithOtp({
+        phone: phoneNumber,
+      })
+      if (error) {
+        throw error.message
+      } else {
+        const { data, error } = await supabase.auth.getUser()
 
-      if (insertError) {
-        throw insertError
+        if (data && data.user) {
+          const uid = data.user?.id
+          console.log('data ', data)
+          setID(uid)
+        }
       }
-      if (data) {
-        setID(data)
-      }
+
+      // if (insertError) {
+      //   throw insertError
+      // }
+      // if (data) {
+      //   setID(data)
+      // }
       setIsModalVisible(false)
       router.push('/paywall')
     } catch (error: any) {
@@ -193,12 +216,6 @@ export default function SignUp({ router }: any) {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-background w-screen'>
-      {/* <OTPModal
-        handleModalVisibility={handleModalVisibility}
-        isVisible={isModalVisible}
-        phoneNumber={phoneNumber}
-        next={goNext}
-      /> */}
       <Modal
         isOpen={isModalVisible}
         onBack={() => setIsModalVisible(false)}
@@ -249,34 +266,6 @@ export default function SignUp({ router }: any) {
             *Phone Number should be 10 digits
           </p>
         )}
-
-        {/* <input
-          type='text'
-          placeholder='City (e.g. New York, NY)'
-          className={`w-full p-4 bg-white rounded-lg ${
-            locationError && 'border-2 border-red-500'
-          }`}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        {citySuggestions.length > 0 && (
-          <div className='bg-white rounded-lg mt-1'>
-            {citySuggestions.map((suggestion) => (
-              <div
-                key={suggestion}
-                className='p-2 cursor-pointer hover:bg-gray-200'
-                onClick={() => {
-                  setLocation(suggestion)
-                  setCitySuggestions([])
-                  setQuery(suggestion)
-                }}
-              >
-                {suggestion}
-              </div>
-            ))}
-          </div>
-        )} */}
-
         <input
           type='password'
           placeholder='Password'
