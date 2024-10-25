@@ -38,7 +38,7 @@ export default function Modal({
   const [value, setValue] = useState('')
   useEffect(() => {
     if (value.length === 6) {
-      onContinue() // Call the onContinue function when 6 digits are typed
+      onContinue()
     }
   }, [value, onContinue])
   return (
