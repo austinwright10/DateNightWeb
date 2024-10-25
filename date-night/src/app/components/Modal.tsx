@@ -6,6 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
+import { useState } from 'react'
 
 export default function Modal({
   isOpen,
@@ -28,11 +35,9 @@ export default function Modal({
 
     return phoneNumber
   }
+  const [value, setValue] = useState('')
   return (
     <Dialog open={isOpen}>
-      {/* <DialogTrigger asChild>
-        <button className='hidden'>Open Modal</button>
-      </DialogTrigger> */}
       <DialogContent
         onInteractOutside={(e) => {
           e.preventDefault()
@@ -42,7 +47,7 @@ export default function Modal({
           <DialogTitle className='text-xl'>Confirm Your Number</DialogTitle>
           <DialogDescription>
             <div className='flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 space-y-6'>
-              <p className='text-center text-gray-700 text-lg'>
+              {/* <p className='text-center text-gray-700 text-lg'>
                 {formatPhoneNumber(phoneNumber)} is the number we have. If
                 correct, press continue.
               </p>
@@ -57,7 +62,20 @@ export default function Modal({
                 className='w-full px-4 bg-none text-gray-700 font-medium rounded-lg transition-colors'
               >
                 Back
-              </button>
+              </button> */}
+              <InputOTP maxLength={6} value={value}>
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} className='border-1 border-black' />
+                  <InputOTPSlot index={1} className='border-1 border-black' />
+                  <InputOTPSlot index={2} className='border-1 border-black' />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} className='border-1 border-black' />
+                  <InputOTPSlot index={4} className='border-1 border-black' />
+                  <InputOTPSlot index={5} className='border-1 border-black' />
+                </InputOTPGroup>
+              </InputOTP>
             </div>
           </DialogDescription>
         </DialogHeader>
