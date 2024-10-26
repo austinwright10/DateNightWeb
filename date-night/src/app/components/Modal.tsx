@@ -19,11 +19,15 @@ export default function Modal({
   phoneNumber,
   onBack,
   onContinue,
+  otpValue,
+  setOtpValue,
 }: {
   isOpen: boolean
   phoneNumber: string
   onBack: () => void
   onContinue: () => void
+  otpValue: string
+  setOtpValue: (value: string) => void
 }) {
   function formatPhoneNumber(phoneNumber: string): string {
     const cleaned = ('' + phoneNumber).replace(/\D/g, '')
@@ -35,12 +39,11 @@ export default function Modal({
 
     return phoneNumber
   }
-  const [value, setValue] = useState('')
   useEffect(() => {
-    if (value.length === 6) {
+    if (otpValue.length === 6) {
       onContinue()
     }
-  }, [value, onContinue])
+  }, [otpValue, onContinue])
   return (
     <Dialog open={isOpen}>
       <DialogContent
@@ -57,8 +60,8 @@ export default function Modal({
             <div className='flex flex-col md:w-3/4 w-full max-w-md mx-auto m-3 space-y-6'>
               <InputOTP
                 maxLength={6}
-                value={value}
-                onChange={(value) => setValue(value)}
+                value={otpValue}
+                onChange={(value) => setOtpValue(value)}
               >
                 <InputOTPGroup className='flex w-full justify-center'>
                   {[...Array(6)].map((_, index) => (
