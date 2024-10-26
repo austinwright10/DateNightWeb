@@ -23,7 +23,7 @@ const PhoneInputWithCountry = ({
   setPhoneNumber,
   error,
 }: PhoneInputProps) => {
-  const [selectedCountry, setSelectedCountry] = React.useState('+1')
+  const [selectedCountry, setSelectedCountry] = useState('+1')
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredCountries = countryCodes.filter(
@@ -35,6 +35,13 @@ const PhoneInputWithCountry = ({
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '')
     setPhoneNumber(value)
+  }
+
+  const handlePhoneBlur = () => {
+    // Prepend the country code only if it's not already present
+    if (!phoneNumber.startsWith(selectedCountry.replace(/\D/g, ''))) {
+      setPhoneNumber(`${selectedCountry}${phoneNumber}`)
+    }
   }
 
   return (
@@ -74,6 +81,7 @@ const PhoneInputWithCountry = ({
         }`}
         value={phoneNumber}
         onChange={handlePhoneChange}
+        onBlur={handlePhoneBlur}
       />
     </div>
   )

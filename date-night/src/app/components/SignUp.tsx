@@ -20,6 +20,7 @@ export default function SignUp({ router }: any) {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [otpValue, setOtpValue] = useState('') // State for OTP
   const [phoneError, setPhoneError] = useState(false)
   const [firstNameError, setFirstNameError] = useState(false)
   const [lastNameError, setLastNameError] = useState(false)
@@ -43,7 +44,7 @@ export default function SignUp({ router }: any) {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       //location: z.string().min(2),
-      phoneNumber: z.string().min(10).max(10),
+      phoneNumber: z.string().min(11).max(11),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
     })
@@ -76,19 +77,9 @@ export default function SignUp({ router }: any) {
       }
       signUpSchema.parse(formData)
       resetErrors()
-      const onboardJSON = JSON.stringify(formData)
       const { data, error: signUpError } = await supabase.auth.signUp({
         phone: phoneNumber,
         password: password,
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-            phone_number: phoneNumber,
-            location: '',
-            onboard: onboardJSON,
-          },
-        },
       })
       if (signUpError) {
         console.log('sign up error ', signUpError)
@@ -186,19 +177,16 @@ export default function SignUp({ router }: any) {
       //     onboard: onboardJSON,
       //   })
       //   .select('id')
-      const { data, error } = await supabase.auth.signInWithOtp({
+      const { data, error } = await supabase.auth.verifyOtp({
         phone: phoneNumber,
+        token: otpValue, // Use the OTP value here
+        type: 'sms',
       })
       if (error) {
         throw error.message
       } else {
-        const { data, error } = await supabase.auth.getUser()
-
-        if (data && data.user) {
-          const uid = data.user?.id
-          console.log('data ', data)
-          setID(uid)
-        }
+        console.log('OTP verification successful')
+        // Proceed with the next steps
       }
 
       // if (insertError) {
@@ -208,7 +196,7 @@ export default function SignUp({ router }: any) {
       //   setID(data)
       // }
       setIsModalVisible(false)
-      router.push('/paywall')
+      //router.push('/paywall')
     } catch (error: any) {
       console.log('error ', error)
     }
@@ -221,6 +209,8 @@ export default function SignUp({ router }: any) {
         onBack={() => setIsModalVisible(false)}
         onContinue={goNext}
         phoneNumber={phoneNumber}
+        otpValue={otpValue} // Pass OTP value to Modal
+        setOtpValue={setOtpValue} // Pass function to update OTP value
       />
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
