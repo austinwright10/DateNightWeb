@@ -44,7 +44,7 @@ export default function SignUp({ router }: any) {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       //location: z.string().min(2),
-      phoneNumber: z.string().min(11).max(11),
+      phoneNumber: z.string().min(12).max(12),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
     })
