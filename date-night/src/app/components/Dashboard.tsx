@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDateStore } from '@/app/stores/stores'
+import { UserOutlined } from '@ant-design/icons'
 
 interface DateItem {
   id: string
@@ -25,32 +26,19 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <div className='flex flex-col items-center p-10 min-h-screen'>
-      <div className='absolute top-10 right-10 z-10'>
+    <div className='flex flex-col items-center p-20 min-h-screen'>
+      <div className='flex flex-row w-full justify-between items-center mb-6'>
+        <h1 className='text-2xl font-semibold text-black'>Previous Dates</h1>
         <button
-          className='bg-red-400 p-3 rounded-full shadow-lg'
+          className='bg-buttonColor p-3 rounded-full shadow-lg'
           onClick={() => router.push('/profile')}
         >
-          <svg
-            className='text-white h-7 w-7'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M5.121 17.804A8.001 8.001 0 0112 2a8.001 8.001 0 016.879 15.804M12 14v2m0 4h.01'
-            />
-          </svg>
+          <UserOutlined style={{ fontSize: '22px' }} />
         </button>
       </div>
-      <div className='flex-grow w-full pt-16'>
-        <h1 className='text-2xl font-semibold mb-4 text-black'>
-          Previous Dates
-        </h1>
+
+      {/* Main Content */}
+      <div className='flex flex-col w-full max-w-xl'>
         {previousDates.length !== 0 ? (
           <div className='space-y-2'>
             {previousDates.map((item: DateItem) => renderItem(item))}
