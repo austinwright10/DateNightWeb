@@ -1,5 +1,6 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Modal from '@/app/components/Modal'
 import { z } from 'zod'
 import debounce from 'lodash/debounce'
@@ -14,7 +15,7 @@ import {
 } from '@/app/stores/stores'
 import PhoneInput from '@/app/components/PhoneInput'
 
-export default function SignUp({ router }: any) {
+export default function SignUp() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -38,6 +39,7 @@ export default function SignUp({ router }: any) {
   const interests = interestStore((state: any) => state.interests)
   const geoDBKEY = process.env.NEXT_PUBLIC_GEODB_KEY!
   const setID = userIDStore((state: any) => state.setID)
+  const router = useRouter()
 
   const signUpSchema = z
     .object({
@@ -186,7 +188,8 @@ export default function SignUp({ router }: any) {
         throw error.message
       } else {
         console.log('OTP verification successful')
-        // Proceed with the next steps
+        setIsModalVisible(false)
+        router.push('/dashboard/DashboardPage')
       }
 
       // if (insertError) {
@@ -195,8 +198,6 @@ export default function SignUp({ router }: any) {
       // if (data) {
       //   setID(data)
       // }
-      setIsModalVisible(false)
-      //router.push('/paywall')
     } catch (error: any) {
       console.log('error ', error)
     }
