@@ -25,7 +25,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <div className='flex flex-col items-center bg-pink-200 p-10 min-h-screen'>
+    <div className='flex flex-col items-center p-10 min-h-screen'>
       <div className='absolute top-10 right-10 z-10'>
         <button
           className='bg-red-400 p-3 rounded-full shadow-lg'
