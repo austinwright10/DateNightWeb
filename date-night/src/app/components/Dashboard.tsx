@@ -25,9 +25,8 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <div className='flex flex-col items-center bg-pink-200 p-6 min-h-screen'>
-      {/* Profile Button */}
-      <div className='absolute top-20 right-10 z-10'>
+    <div className='flex flex-col items-center bg-pink-200 p-10 min-h-screen'>
+      <div className='absolute top-10 right-10 z-10'>
         <button
           className='bg-red-400 p-3 rounded-full shadow-lg'
           onClick={() => router.push('/profile')}
@@ -48,8 +47,6 @@ export default function Dashboard() {
           </svg>
         </button>
       </div>
-
-      {/* List Container */}
       <div className='flex-grow w-full pt-16'>
         <h1 className='text-2xl font-semibold mb-4 text-black'>
           Previous Dates
