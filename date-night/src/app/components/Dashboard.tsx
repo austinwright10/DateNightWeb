@@ -35,7 +35,7 @@ export default function Dashboard() {
         <h1 className='text-2xl font-semibold text-black'>Previous Dates</h1>
         <button
           className='bg-buttonColor p-3 rounded-full shadow-lg'
-          onClick={() => router.push('/profile')}
+          onClick={() => router.push('/dashboard/ProfilePage')}
         >
           <UserOutlined style={{ fontSize: '22px' }} />
         </button>
