@@ -38,7 +38,6 @@ const PhoneInputWithCountry = ({
   }
 
   const handlePhoneBlur = () => {
-    // Prepend the country code only if it's not already present
     if (!phoneNumber.startsWith(selectedCountry.replace(/\D/g, ''))) {
       setPhoneNumber(`${selectedCountry}${phoneNumber}`)
     }
@@ -47,10 +46,10 @@ const PhoneInputWithCountry = ({
   return (
     <div className='flex gap-10 w-full'>
       <Select defaultValue={selectedCountry} onValueChange={setSelectedCountry}>
-        <SelectTrigger className='w-1/2 bg-white h-15'>
+        <SelectTrigger className='lg:w-full w-5/12 bg-white h-15'>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className=''>
           <div className='p-2'>
             <Input
               placeholder='Search countries...'
@@ -59,24 +58,26 @@ const PhoneInputWithCountry = ({
               className='mb-2'
             />
           </div>
-          <ScrollArea className=''>
-            {filteredCountries.map((country) => (
-              <SelectItem key={country.code} value={country.code}>
-                <div className='flex items-center gap-2'>
-                  <span>{country.flag}</span>
-                  <span className='font-medium'>{country.code}</span>
-                  <span className='text-sm'>{country.country}</span>
-                </div>
-              </SelectItem>
-            ))}
-          </ScrollArea>
+          <div className=''>
+            <ScrollArea className='w-full'>
+              {filteredCountries.map((country) => (
+                <SelectItem key={country.code} value={country.code}>
+                  <div className='flex items-center gap-2'>
+                    <span>{country.flag}</span>
+                    <span className='font-medium'>{country.code}</span>
+                    <span className='text-sm'>{country.country}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </ScrollArea>
+          </div>
         </SelectContent>
       </Select>
 
       <input
         type='tel'
         placeholder='Phone Number'
-        className={`w-1/2 p-4 bg-white rounded-lg ${
+        className={`w-full p-4 bg-white rounded-lg ${
           error && 'border-2 border-red-500'
         }`}
         value={phoneNumber}
