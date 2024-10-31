@@ -101,9 +101,9 @@ export default function SignUp() {
       if (zodErrors.includes('lastName')) {
         setLastNameError(true)
       }
-      // if (!locationRegex.test(location)) {
-      //   setLocationError(true)
-      // }
+      if (!locationRegex.test(location)) {
+        setLocationError(true)
+      }
       if (zodErrors.includes('phoneNumber') || !phoneRegex.test(phoneNumber)) {
         setPhoneError(true)
       }
