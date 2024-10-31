@@ -46,7 +46,7 @@ export default function SignUp() {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       //location: z.string().min(2),
-      phoneNumber: z.string().min(12).max(12),
+      phoneNumber: z.string().min(10).max(10),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
     })
@@ -101,9 +101,9 @@ export default function SignUp() {
       if (zodErrors.includes('lastName')) {
         setLastNameError(true)
       }
-      // if (!locationRegex.test(location)) {
-      //   setLocationError(true)
-      // }
+      if (!locationRegex.test(location)) {
+        setLocationError(true)
+      }
       if (zodErrors.includes('phoneNumber') || !phoneRegex.test(phoneNumber)) {
         setPhoneError(true)
       }
@@ -253,8 +253,39 @@ export default function SignUp() {
           error={phoneError}
         />
         {phoneError && (
-          <p className='text-red-500 text-xs'>
+          <p className='text-right text-red-500 text-xs'>
             *Phone Number should be 10 digits
+          </p>
+        )}
+        <input
+          type='text'
+          placeholder='City (e.g. New York, NY)'
+          className={`w-full p-4 bg-white rounded-lg ${
+            locationError && 'border-2 border-red-500'
+          }`}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {citySuggestions.length > 0 && (
+          <div className='bg-white rounded-lg mt-1'>
+            {citySuggestions.map((suggestion) => (
+              <div
+                key={suggestion}
+                className='p-2 cursor-pointer hover:bg-gray-200'
+                onClick={() => {
+                  setLocation(suggestion)
+                  setCitySuggestions([])
+                  setQuery(suggestion)
+                }}
+              >
+                {suggestion}
+              </div>
+            ))}
+          </div>
+        )}
+        {locationError && (
+          <p className='text-red-500 text-xs'>
+            *Location format: e.g. Dallas, TX
           </p>
         )}
         <input
