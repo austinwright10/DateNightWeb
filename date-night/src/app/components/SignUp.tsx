@@ -46,7 +46,7 @@ export default function SignUp() {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       //location: z.string().min(2),
-      phoneNumber: z.string().min(12).max(12),
+      phoneNumber: z.string().min(10).max(10),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
     })
@@ -65,8 +65,7 @@ export default function SignUp() {
   }
 
   const locationRegex = /^([A-Za-z\s]+),\s*([A-Z]{2})$/
-  const phoneRegex =
-    /^\+(\d{1,3})\s?(\(?\d{1,4}?\)?[\s-]?(\d{1,4}[\s-]?\d{1,4}|\d{1,4}[\s-]?\d{1,4}[\s-]?\d{1,4}))$/
+  const phoneRegex = /^[0-9]{10}$/
 
   const handleSignUp = async () => {
     try {

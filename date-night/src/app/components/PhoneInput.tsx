@@ -32,17 +32,6 @@ const PhoneInputWithCountry = ({
       country.code.includes(searchQuery)
   )
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '')
-    setPhoneNumber(value)
-  }
-
-  const handlePhoneBlur = () => {
-    if (!phoneNumber.startsWith(selectedCountry.replace(/\D/g, ''))) {
-      setPhoneNumber(`${selectedCountry}${phoneNumber}`)
-    }
-  }
-
   return (
     <div className='flex gap-10 w-full'>
       <Select defaultValue={selectedCountry} onValueChange={setSelectedCountry}>
@@ -81,8 +70,7 @@ const PhoneInputWithCountry = ({
           error && 'border-2 border-red-500'
         }`}
         value={phoneNumber}
-        onChange={handlePhoneChange}
-        onBlur={handlePhoneBlur}
+        onChange={(e) => setPhoneNumber(e.target.value)}
       />
     </div>
   )
