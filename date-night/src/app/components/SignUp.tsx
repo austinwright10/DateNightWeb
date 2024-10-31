@@ -258,6 +258,32 @@ export default function SignUp() {
           </p>
         )}
         <input
+          type='text'
+          placeholder='City (e.g. New York, NY)'
+          className={`w-full p-4 bg-white rounded-lg ${
+            locationError && 'border-2 border-red-500'
+          }`}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {citySuggestions.length > 0 && (
+          <div className='bg-white rounded-lg mt-1'>
+            {citySuggestions.map((suggestion) => (
+              <div
+                key={suggestion}
+                className='p-2 cursor-pointer hover:bg-gray-200'
+                onClick={() => {
+                  setLocation(suggestion)
+                  setCitySuggestions([])
+                  setQuery(suggestion)
+                }}
+              >
+                {suggestion}
+              </div>
+            ))}
+          </div>
+        )}
+        <input
           type='password'
           placeholder='Password'
           className={`w-full p-4 bg-white rounded-lg ${
