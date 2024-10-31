@@ -65,7 +65,8 @@ export default function SignUp() {
   }
 
   const locationRegex = /^([A-Za-z\s]+),\s*([A-Z]{2})$/
-  const phoneRegex = /^[0-9]{10}$/
+  const phoneRegex =
+    /^\+(\d{1,3})\s?(\(?\d{1,4}?\)?[\s-]?(\d{1,4}[\s-]?\d{1,4}|\d{1,4}[\s-]?\d{1,4}[\s-]?\d{1,4}))$/
 
   const handleSignUp = async () => {
     try {
@@ -253,7 +254,7 @@ export default function SignUp() {
           error={phoneError}
         />
         {phoneError && (
-          <p className='text-red-500 text-xs'>
+          <p className='text-right text-red-500 text-xs'>
             *Phone Number should be 10 digits
           </p>
         )}
@@ -282,6 +283,11 @@ export default function SignUp() {
               </div>
             ))}
           </div>
+        )}
+        {locationError && (
+          <p className='text-red-500 text-xs'>
+            *Location format: e.g. Dallas, TX
+          </p>
         )}
         <input
           type='password'
