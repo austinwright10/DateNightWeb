@@ -162,17 +162,6 @@ export default function SignUp() {
         interests,
       }
       const onboardJSON = JSON.stringify(onboardData)
-
-      // const { data, error: insertError } = await supabase
-      //   .from('users')
-      //   .insert({
-      //     first_name: firstName,
-      //     last_name: lastName,
-      //     phone_number: formatPhoneNumber(phoneNumber),
-      //     location: '',
-      //     onboard: onboardJSON,
-      //   })
-      //   .select('id')
       const { data, error } = await supabase.auth.verifyOtp({
         phone: phoneNumber,
         token: otpValue, // Use the OTP value here
@@ -181,7 +170,17 @@ export default function SignUp() {
       if (error) {
         throw error.message
       } else {
-        console.log('OTP verification successful')
+        //users selections goes here
+        // const { data, error: insertError } = await supabase
+        //   .from('users')
+        //   .insert({
+        //     first_name: firstName,
+        //     last_name: lastName,
+        //     phone_number: formatPhoneNumber(phoneNumber),
+        //     location: '',
+        //     onboard: onboardJSON,
+        //   })
+        //   .select('id')
         setIsModalVisible(false)
         router.push('/dashboard/DashboardPage')
       }
