@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Select,
   SelectContent,
@@ -25,20 +25,60 @@ const PhoneInputWithCountry = ({
 }: PhoneInputProps) => {
   const [selectedCountry, setSelectedCountry] = useState('+1')
   const [searchQuery, setSearchQuery] = useState('')
+  const [localPhoneNumber, setLocalPhoneNumber] = useState('')
 
+  // Filter countries based on search query
   const filteredCountries = countryCodes.filter(
     (country) =>
       country.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
       country.code.includes(searchQuery)
   )
 
+  // Handle local phone number changes
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '') // Remove non-digits
+    setLocalPhoneNumber(value)
+  }
+
+  // Handle country code selection
+  const handleCountryChange = (code: string) => {
+    setSelectedCountry(code)
+  }
+
+  // Update parent component with formatted phone number
+  useEffect(() => {
+    // Wait for user to finish typing (when number is likely complete)
+    const timeoutId = setTimeout(() => {
+      if (localPhoneNumber) {
+        const fullNumber = `${selectedCountry}${localPhoneNumber}`
+        setPhoneNumber(fullNumber)
+      } else {
+        setPhoneNumber('')
+      }
+    }, 500) // 500ms delay
+
+    return () => clearTimeout(timeoutId)
+  }, [localPhoneNumber, selectedCountry, setPhoneNumber])
+
+  // Initialize local phone number from prop
+  useEffect(() => {
+    if (phoneNumber) {
+      // Remove any country code prefix from the phone number
+      const withoutCountry = phoneNumber.replace(/^\+\d+/, '')
+      setLocalPhoneNumber(withoutCountry)
+    }
+  }, [])
+
   return (
     <div className='flex gap-10 w-full'>
-      <Select defaultValue={selectedCountry} onValueChange={setSelectedCountry}>
+      <Select
+        defaultValue={selectedCountry}
+        onValueChange={handleCountryChange}
+      >
         <SelectTrigger className='lg:w-full w-5/12 bg-white h-15'>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className=''>
+        <SelectContent>
           <div className='p-2'>
             <Input
               placeholder='Search countries...'
@@ -47,31 +87,37 @@ const PhoneInputWithCountry = ({
               className='mb-2'
             />
           </div>
-          <div className=''>
-            <ScrollArea className='w-full'>
-              {filteredCountries.map((country) => (
-                <SelectItem key={country.code} value={country.code}>
-                  <div className='flex items-center gap-2'>
-                    <span>{country.flag}</span>
-                    <span className='font-medium'>{country.code}</span>
-                    <span className='text-sm'>{country.country}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </ScrollArea>
-          </div>
+          <ScrollArea className='h-72'>
+            {filteredCountries.map((country) => (
+              <SelectItem key={country.code} value={country.code}>
+                <div className='flex items-center gap-2'>
+                  <span>{country.flag}</span>
+                  <span className='font-medium'>{country.code}</span>
+                  <span className='text-sm'>{country.country}</span>
+                </div>
+              </SelectItem>
+            ))}
+          </ScrollArea>
         </SelectContent>
       </Select>
 
-      <input
-        type='tel'
-        placeholder='Phone Number'
-        className={`w-full p-4 bg-white rounded-lg ${
-          error && 'border-2 border-red-500'
-        }`}
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-      />
+      <div className='relative w-full'>
+        <input
+          type='tel'
+          placeholder='Phone Number'
+          className={`w-full p-4 bg-white rounded-lg ${
+            error && 'border-2 border-red-500'
+          }`}
+          value={localPhoneNumber}
+          onChange={handlePhoneChange}
+          maxLength={15}
+        />
+        {localPhoneNumber && (
+          <div className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500'>
+            {selectedCountry + localPhoneNumber}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
