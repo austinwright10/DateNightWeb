@@ -83,15 +83,9 @@ export default function SignUp() {
         phone: phoneNumber,
         password: password,
       })
-      if (signUpError) {
-        console.log('sign up error ', signUpError)
-      } else {
-        console.log('worked')
-      }
 
       setIsModalVisible(true)
     } catch (error: any) {
-      console.log('error ', error.errors)
       const zodErrors = error.errors.map((err: any) => err.path[0])
       resetErrors()
 
@@ -210,8 +204,8 @@ export default function SignUp() {
         onBack={() => setIsModalVisible(false)}
         onContinue={goNext}
         phoneNumber={phoneNumber}
-        otpValue={otpValue} // Pass OTP value to Modal
-        setOtpValue={setOtpValue} // Pass function to update OTP value
+        otpValue={otpValue}
+        setOtpValue={setOtpValue}
       />
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
