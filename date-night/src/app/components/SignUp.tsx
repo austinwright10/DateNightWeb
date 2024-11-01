@@ -38,6 +38,7 @@ export default function SignUp() {
   const selectedTravel = travelStore((state: any) => state.travel)
   const interests = interestStore((state: any) => state.interests)
   const geoDBKEY = process.env.NEXT_PUBLIC_GEODB_KEY!
+  const userID = userIDStore((state: any) => state.id)
   const setID = userIDStore((state: any) => state.setID)
   const router = useRouter()
 
@@ -46,7 +47,7 @@ export default function SignUp() {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       //location: z.string().min(2),
-      phoneNumber: z.string().min(10).max(10),
+      phoneNumber: z.string().min(12).max(12),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
     })
@@ -83,15 +84,15 @@ export default function SignUp() {
         phone: phoneNumber,
         password: password,
       })
-      if (signUpError) {
-        console.log('sign up error ', signUpError)
+
+      if (data?.user) {
+        setID(data.user.id)
       } else {
-        console.log('worked')
+        console.log('error here ', phoneNumber)
       }
 
       setIsModalVisible(true)
     } catch (error: any) {
-      console.log('error ', error.errors)
       const zodErrors = error.errors.map((err: any) => err.path[0])
       resetErrors()
 
@@ -154,6 +155,16 @@ export default function SignUp() {
     }, 1000),
     []
   )
+  function formatPhoneNumber(phoneNumber: string): string {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, '')
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+
+    if (match) {
+      return `(${match[1]})-${match[2]}-${match[3]}`
+    }
+
+    return phoneNumber
+  }
 
   useEffect(() => {
     debouncedFetchCities(query)
@@ -168,36 +179,32 @@ export default function SignUp() {
         interests,
       }
       const onboardJSON = JSON.stringify(onboardData)
-
-      // const { data, error: insertError } = await supabase
-      //   .from('users')
-      //   .insert({
-      //     first_name: firstName,
-      //     last_name: lastName,
-      //     phone_number: formatPhoneNumber(phoneNumber),
-      //     location: '',
-      //     onboard: onboardJSON,
-      //   })
-      //   .select('id')
       const { data, error } = await supabase.auth.verifyOtp({
         phone: phoneNumber,
-        token: otpValue, // Use the OTP value here
+        token: otpValue,
         type: 'sms',
       })
       if (error) {
         throw error.message
       } else {
-        console.log('OTP verification successful')
+        const { data, error: insertError } = await supabase
+          .from('user_onboarding')
+          .insert({
+            id: userID,
+            first_name: firstName,
+            last_name: lastName,
+            phone_number: formatPhoneNumber(phoneNumber),
+            location: '',
+            onboard: onboardJSON,
+          })
+        if (data) {
+          console.log('inserted into table')
+        } else {
+          console.log('ddint work ', insertError)
+        }
         setIsModalVisible(false)
         router.push('/dashboard/DashboardPage')
       }
-
-      // if (insertError) {
-      //   throw insertError
-      // }
-      // if (data) {
-      //   setID(data)
-      // }
     } catch (error: any) {
       console.log('error ', error)
     }
@@ -210,8 +217,8 @@ export default function SignUp() {
         onBack={() => setIsModalVisible(false)}
         onContinue={goNext}
         phoneNumber={phoneNumber}
-        otpValue={otpValue} // Pass OTP value to Modal
-        setOtpValue={setOtpValue} // Pass function to update OTP value
+        otpValue={otpValue}
+        setOtpValue={setOtpValue}
       />
       <h1 className='text-2xl font-medium text-black mb-4'>
         Create Your Account
