@@ -85,11 +85,12 @@ export default function SignUp() {
         password: password,
       })
 
-      if (data?.user) {
-        setID(data.user.id)
-      } else {
-        console.log('error here ', phoneNumber)
-      }
+      // if (data?.user) {
+      //   setID(data.user.id)
+      //   console.log('data id ', data.user.id)
+      // } else {
+      //   console.log('error here ', phoneNumber)
+      // }
 
       setIsModalVisible(true)
     } catch (error: any) {
@@ -187,20 +188,21 @@ export default function SignUp() {
       if (error) {
         throw error.message
       } else {
-        const { data, error: insertError } = await supabase
-          .from('user_onboarding')
-          .insert({
-            id: userID,
-            first_name: firstName,
-            last_name: lastName,
-            phone_number: formatPhoneNumber(phoneNumber),
-            location: '',
-            onboard: onboardJSON,
-          })
+        const {
+          data: { user },
+        } = await supabase.auth.getUser()
+
         if (data) {
-          console.log('inserted into table')
-        } else {
-          console.log('ddint work ', insertError)
+          const { error: insertError } = await supabase
+            .from('user_onboarding')
+            .insert({
+              id: data?.user?.id,
+              first_name: firstName,
+              last_name: lastName,
+              phone_number: formatPhoneNumber(phoneNumber),
+              location: '',
+              onboard: onboardJSON,
+            })
         }
         setIsModalVisible(false)
         router.push('/dashboard/DashboardPage')
