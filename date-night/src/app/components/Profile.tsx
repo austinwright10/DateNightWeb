@@ -159,34 +159,125 @@ const Profile = () => {
     <div className='container mx-auto px-4 py-10'>
       <h1 className='text-3xl font-bold mb-6'>Profile</h1>
 
+      {/* Name Section */}
       <div className='mb-6'>
-        <label className='block text-lg font-medium mb-1'>Location</label>
-        {!editingLocation ? (
+        <label className='block text-lg font-medium mb-1'>Name</label>
+        <div className='flex justify-between items-center'>
+          <span>{`${userInfo.phone_number}`}</span>
+          <CheckOutlined
+            onClick={() => {
+              setTempPhone(userInfo.phone_number)
+              setEditingPhone(true)
+            }}
+            className='cursor-pointer'
+          />
+        </div>
+      </div>
+
+      {/* Phone Number Section */}
+      <div className='mb-6'>
+        <label className='block text-lg font-medium mb-1'>Phone Number</label>
+        {!editingPhone ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.location}</span>
-            {/* <Ionicons
-              name='pencil'
-              size={24}
+            <span>{userInfo.phone_number}</span>
+            <CheckOutlined
               onClick={() => {
-                setTempLocation(userInfo.location)
-                setEditingLocation(true)
+                setTempPhone(userInfo.phone_number)
+                setEditingPhone(true)
               }}
               className='cursor-pointer'
-            /> */}
+            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
             <input
               className='input'
-              value={tempLocation}
-              onChange={(e) => setTempLocation(e.target.value)}
+              value={tempPhone}
+              onChange={(e) => setTempPhone(e.target.value)}
             />
             <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
 
-      {/* Similar blocks for Phone Number, Budget, Travel, and Day */}
+      {/* Budget Section */}
+      <div className='mb-6'>
+        <label className='block text-lg font-medium mb-1'>Budget</label>
+        {!editingBudget ? (
+          <div className='flex justify-between items-center'>
+            <span>{userInfo.budget}</span>
+            <CheckOutlined
+              onClick={() => {
+                setTempBudget(userInfo.budget)
+                setEditingBudget(true)
+              }}
+              className='cursor-pointer'
+            />
+          </div>
+        ) : (
+          <div className='flex justify-between items-center'>
+            <input
+              className='input'
+              value={tempBudget}
+              onChange={(e) => setTempBudget(e.target.value)}
+            />
+            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
+          </div>
+        )}
+      </div>
+
+      {/* Travel Section */}
+      <div className='mb-6'>
+        <label className='block text-lg font-medium mb-1'>Travel</label>
+        {!editingTravel ? (
+          <div className='flex justify-between items-center'>
+            <span>{userInfo.travel}</span>
+            <CheckOutlined
+              onClick={() => {
+                setTempTravel(userInfo.travel)
+                setEditingTravel(true)
+              }}
+              className='cursor-pointer'
+            />
+          </div>
+        ) : (
+          <div className='flex justify-between items-center'>
+            <input
+              className='input'
+              value={tempTravel}
+              onChange={(e) => setTempTravel(e.target.value)}
+            />
+            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
+          </div>
+        )}
+      </div>
+
+      {/* Day Section */}
+      <div className='mb-6'>
+        <label className='block text-lg font-medium mb-1'>Day</label>
+        {!editingDay ? (
+          <div className='flex justify-between items-center'>
+            <span>{userInfo.day}</span>
+            <CheckOutlined
+              onClick={() => {
+                setTempDay(userInfo.day)
+                setEditingDay(true)
+              }}
+              className='cursor-pointer'
+            />
+          </div>
+        ) : (
+          <div className='flex justify-between items-center'>
+            <input
+              className='input'
+              value={tempDay}
+              onChange={(e) => setTempDay(e.target.value)}
+            />
+            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
+          </div>
+        )}
+      </div>
+
       {/* Interests Section */}
       <div className='mb-6'>
         <h2 className='text-lg font-medium mb-2'>Interests</h2>
