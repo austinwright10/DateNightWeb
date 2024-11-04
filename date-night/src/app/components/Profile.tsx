@@ -160,7 +160,7 @@ const Profile = () => {
       <h1 className='text-3xl font-bold mb-6'>Profile</h1>
 
       {/* Name Section */}
-      <div className='mb-6'>
+      <div className='mb-6 border-b-2 border-black'>
         <label className='block text-lg font-medium mb-1'>Name</label>
         <div className='flex justify-between items-center'>
           <span>{`${userInfo.phone_number}`}</span>
@@ -175,7 +175,7 @@ const Profile = () => {
       </div>
 
       {/* Phone Number Section */}
-      <div className='mb-6'>
+      <div className='mb-6  border-b-2 border-black'>
         <label className='block text-lg font-medium mb-1'>Phone Number</label>
         {!editingPhone ? (
           <div className='flex justify-between items-center'>
@@ -201,7 +201,7 @@ const Profile = () => {
       </div>
 
       {/* Budget Section */}
-      <div className='mb-6'>
+      <div className='mb-6 border-b-2 border-black'>
         <label className='block text-lg font-medium mb-1'>Budget</label>
         {!editingBudget ? (
           <div className='flex justify-between items-center'>
@@ -227,7 +227,7 @@ const Profile = () => {
       </div>
 
       {/* Travel Section */}
-      <div className='mb-6'>
+      <div className='mb-6 border-b-2 border-black'>
         <label className='block text-lg font-medium mb-1'>Travel</label>
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
@@ -253,7 +253,7 @@ const Profile = () => {
       </div>
 
       {/* Day Section */}
-      <div className='mb-6'>
+      <div className='mb-6 border-b-2 border-black'>
         <label className='block text-lg font-medium mb-1'>Day</label>
         {!editingDay ? (
           <div className='flex justify-between items-center'>
@@ -279,7 +279,7 @@ const Profile = () => {
       </div>
 
       {/* Interests Section */}
-      <div className='mb-6'>
+      <div className='mb-6 border-b-2 border-black'>
         <h2 className='text-lg font-medium mb-2'>Interests</h2>
         <div className='flex flex-wrap'>
           {interests.map((interest: string) => (
