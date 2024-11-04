@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { previousDates, loadDates } = useDateStore()
 
   const renderItem = (item: DateItem) => (
-    <div className='p-4 my-2 rounded-lg w-full border-b-2 border-black'>
+    <div className='p-4 w-full hover:bg-background border-b-2 border-black'>
       <button
         onClick={() => console.log('Item clicked')}
         className='w-full text-left flex flex-row justify-between items-center'
@@ -42,7 +42,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content */}
-      <div className='flex flex-col w-full bg-white rounded-lg p-2'>
+      <div className='flex flex-col w-full bg-red-100/90 rounded-lg'>
         {previousDates.length !== 0 ? (
           <div className='space-y-5'>
             {previousDates.map((item: DateItem) => renderItem(item))}
