@@ -54,33 +54,50 @@ const Profile = () => {
   }, [])
 
   const fetchUserInfo = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('registered_users')
-        .select('id, phone_number, location, onboard')
-        .eq('id', userID[0].id)
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+
+    if (userError) {
+      console.log('Error fetching user:', userError)
+      return
+    }
+
+    if (userData && userData.user) {
+      const { id } = userData.user
+
+      const { data, error: fetchError } = await supabase
+        .from('user_onboarding')
+        .select('*')
+        .eq('id', id)
         .single()
 
-      if (error) {
-        console.log('error from profile ', error)
+      if (fetchError) {
+        console.log('Error fetching data for profile:', fetchError)
       } else {
-        const onboardData = data.onboard || {}
-        setUserInfo({
-          phone_number: data.phone_number || '',
-          location: data.location || '',
-          budget: onboardData.selectedPrice || '',
-          travel: onboardData.selectedTravel || '',
-          day: onboardData.selectedDay || '',
-          onboard: onboardData,
-        })
-        setTempPhone(data.phone_number || '')
-        setTempLocation(data.location || '')
-        setTempBudget(onboardData.selectedPrice || '')
-        setTempTravel(onboardData.selectedTravel || '')
-        setTempDay(onboardData.selectedDay || '')
+        console.log('data ', data)
+        if (data) {
+          setUserInfo({
+            phone_number: data.phone_number || '',
+            location: data.location || '',
+            budget: data.onboard.selectedPrice || '',
+            travel: data.onboard.selectedTravel || '',
+            day: data.onboard.selectedDay || '',
+            onboard: {
+              selectedPrice: data.onboard.selectedPrice || '',
+              selectedTravel: data.onboard.selectedTravel || '',
+              selectedDay: data.onboard.selectedDay || '',
+              interests: data.onboard.interests || [],
+            },
+          })
+
+          setTempPhone(data.phone_number || '')
+          setTempLocation(data.location || '')
+          setTempBudget(data.onboard.selectedPrice || '')
+          setTempTravel(data.onboard.selectedTravel || '')
+          setTempDay(data.onboard.selectedDay || '')
+        }
       }
-    } catch (error) {
-      console.log('error ', error)
+    } else {
+      console.log('No user data found')
     }
   }
 
@@ -138,10 +155,6 @@ const Profile = () => {
     if (error) console.error('Sign-out error:', error)
   }
 
-  const toggleInterest = (interest: string) => {
-    setInterests(interest)
-  }
-
   return (
     <div className='container mx-auto px-4 py-10'>
       <h1 className='text-3xl font-bold mb-6'>Profile</h1>
@@ -186,7 +199,6 @@ const Profile = () => {
                   ? 'bg-red-500 text-white'
                   : 'bg-white border'
               }`}
-              onClick={() => toggleInterest(interest)}
             >
               {interest}
             </button>
