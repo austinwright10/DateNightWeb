@@ -5,6 +5,7 @@ import { interestStore, userIDStore } from '@/app/stores/stores'
 import { CheckOutlined } from '@ant-design/icons'
 
 interface UserInfo {
+  name: string
   phone_number: string
   location: string
   budget: string
@@ -20,6 +21,7 @@ interface UserInfo {
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
+    name: '',
     phone_number: '',
     location: '',
     budget: '',
@@ -73,9 +75,10 @@ const Profile = () => {
       if (fetchError) {
         console.log('Error fetching data for profile:', fetchError)
       } else {
-        console.log('data ', data)
         if (data) {
+          console.log('data here ', data)
           setUserInfo({
+            name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
             budget: data.onboard.selectedPrice || '',
@@ -163,7 +166,7 @@ const Profile = () => {
       <div className='mb-6 border-b-2 border-black'>
         <label className='block text-lg font-medium mb-1'>Name</label>
         <div className='flex justify-between items-center'>
-          <span>{`${userInfo.phone_number}`}</span>
+          <span>{`${userInfo.name}`}</span>
           <CheckOutlined
             onClick={() => {
               setTempPhone(userInfo.phone_number)
