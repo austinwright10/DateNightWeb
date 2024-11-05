@@ -167,13 +167,13 @@ const Profile = () => {
         <label className='block text-lg font-medium mb-1'>Name</label>
         <div className='flex justify-between items-center'>
           <span>{`${userInfo.name}`}</span>
-          <CheckOutlined
+          {/* <CheckOutlined
             onClick={() => {
               setTempPhone(userInfo.phone_number)
               setEditingPhone(true)
             }}
             className='cursor-pointer'
-          />
+          /> */}
         </div>
       </div>
 
@@ -183,13 +183,13 @@ const Profile = () => {
         {!editingPhone ? (
           <div className='flex justify-between items-center'>
             <span>{userInfo.phone_number}</span>
-            <CheckOutlined
+            {/* <CheckOutlined
               onClick={() => {
                 setTempPhone(userInfo.phone_number)
                 setEditingPhone(true)
               }}
               className='cursor-pointer'
-            />
+            /> */}
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -198,7 +198,7 @@ const Profile = () => {
               value={tempPhone}
               onChange={(e) => setTempPhone(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
+            {/* <CheckOutlined onClick={handleSave} className='cursor-pointer' /> */}
           </div>
         )}
       </div>
