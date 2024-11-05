@@ -195,7 +195,7 @@ export default function SignUp() {
         if (data) {
           const { error: insertError } = await supabase
             .from('user_onboarding')
-            .insert({
+            .upsert({
               id: data?.user?.id,
               first_name: firstName,
               last_name: lastName,

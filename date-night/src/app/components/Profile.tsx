@@ -5,6 +5,7 @@ import { interestStore, userIDStore } from '@/app/stores/stores'
 import { CheckOutlined } from '@ant-design/icons'
 
 interface UserInfo {
+  name: string
   phone_number: string
   location: string
   budget: string
@@ -20,6 +21,7 @@ interface UserInfo {
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
+    name: '',
     phone_number: '',
     location: '',
     budget: '',
@@ -54,33 +56,51 @@ const Profile = () => {
   }, [])
 
   const fetchUserInfo = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('registered_users')
-        .select('id, phone_number, location, onboard')
-        .eq('id', userID[0].id)
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+
+    if (userError) {
+      console.log('Error fetching user:', userError)
+      return
+    }
+
+    if (userData && userData.user) {
+      const { id } = userData.user
+
+      const { data, error: fetchError } = await supabase
+        .from('user_onboarding')
+        .select('*')
+        .eq('id', id)
         .single()
 
-      if (error) {
-        console.log('error from profile ', error)
+      if (fetchError) {
+        console.log('Error fetching data for profile:', fetchError)
       } else {
-        const onboardData = data.onboard || {}
-        setUserInfo({
-          phone_number: data.phone_number || '',
-          location: data.location || '',
-          budget: onboardData.selectedPrice || '',
-          travel: onboardData.selectedTravel || '',
-          day: onboardData.selectedDay || '',
-          onboard: onboardData,
-        })
-        setTempPhone(data.phone_number || '')
-        setTempLocation(data.location || '')
-        setTempBudget(onboardData.selectedPrice || '')
-        setTempTravel(onboardData.selectedTravel || '')
-        setTempDay(onboardData.selectedDay || '')
+        if (data) {
+          console.log('data here ', data)
+          setUserInfo({
+            name: data.first_name + ' ' + data.last_name || '',
+            phone_number: data.phone_number || '',
+            location: data.location || '',
+            budget: data.onboard.selectedPrice || '',
+            travel: data.onboard.selectedTravel || '',
+            day: data.onboard.selectedDay || '',
+            onboard: {
+              selectedPrice: data.onboard.selectedPrice || '',
+              selectedTravel: data.onboard.selectedTravel || '',
+              selectedDay: data.onboard.selectedDay || '',
+              interests: data.onboard.interests || [],
+            },
+          })
+
+          setTempPhone(data.phone_number || '')
+          setTempLocation(data.location || '')
+          setTempBudget(data.onboard.selectedPrice || '')
+          setTempTravel(data.onboard.selectedTravel || '')
+          setTempDay(data.onboard.selectedDay || '')
+        }
       }
-    } catch (error) {
-      console.log('error ', error)
+    } else {
+      console.log('No user data found')
     }
   }
 
@@ -138,25 +158,35 @@ const Profile = () => {
     if (error) console.error('Sign-out error:', error)
   }
 
-  const toggleInterest = (interest: string) => {
-    setInterests(interest)
-  }
-
   return (
     <div className='container mx-auto px-4 py-10'>
       <h1 className='text-3xl font-bold mb-6'>Profile</h1>
 
-      <div className='mb-6'>
-        <label className='block text-lg font-medium mb-1'>Location</label>
-        {!editingLocation ? (
+      {/* Name Section */}
+      <div className='mb-6 border-b-2 border-black'>
+        <label className='block text-lg font-medium mb-1'>Name</label>
+        <div className='flex justify-between items-center'>
+          <span>{`${userInfo.name}`}</span>
+          {/* <CheckOutlined
+            onClick={() => {
+              setTempPhone(userInfo.phone_number)
+              setEditingPhone(true)
+            }}
+            className='cursor-pointer'
+          /> */}
+        </div>
+      </div>
+
+      {/* Phone Number Section */}
+      <div className='mb-6  border-b-2 border-black'>
+        <label className='block text-lg font-medium mb-1'>Phone Number</label>
+        {!editingPhone ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.location}</span>
-            {/* <Ionicons
-              name='pencil'
-              size={24}
+            <span>{userInfo.phone_number}</span>
+            {/* <CheckOutlined
               onClick={() => {
-                setTempLocation(userInfo.location)
-                setEditingLocation(true)
+                setTempPhone(userInfo.phone_number)
+                setEditingPhone(true)
               }}
               className='cursor-pointer'
             /> */}
@@ -165,17 +195,94 @@ const Profile = () => {
           <div className='flex justify-between items-center'>
             <input
               className='input'
-              value={tempLocation}
-              onChange={(e) => setTempLocation(e.target.value)}
+              value={tempPhone}
+              onChange={(e) => setTempPhone(e.target.value)}
+            />
+            {/* <CheckOutlined onClick={handleSave} className='cursor-pointer' /> */}
+          </div>
+        )}
+      </div>
+
+      {/* Budget Section */}
+      <div className='mb-6 border-b-2 border-black'>
+        <label className='block text-lg font-medium mb-1'>Budget</label>
+        {!editingBudget ? (
+          <div className='flex justify-between items-center'>
+            <span>{userInfo.budget}</span>
+            <CheckOutlined
+              onClick={() => {
+                setTempBudget(userInfo.budget)
+                setEditingBudget(true)
+              }}
+              className='cursor-pointer'
+            />
+          </div>
+        ) : (
+          <div className='flex justify-between items-center'>
+            <input
+              className='input'
+              value={tempBudget}
+              onChange={(e) => setTempBudget(e.target.value)}
             />
             <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
 
-      {/* Similar blocks for Phone Number, Budget, Travel, and Day */}
+      {/* Travel Section */}
+      <div className='mb-6 border-b-2 border-black'>
+        <label className='block text-lg font-medium mb-1'>Travel</label>
+        {!editingTravel ? (
+          <div className='flex justify-between items-center'>
+            <span>{userInfo.travel}</span>
+            <CheckOutlined
+              onClick={() => {
+                setTempTravel(userInfo.travel)
+                setEditingTravel(true)
+              }}
+              className='cursor-pointer'
+            />
+          </div>
+        ) : (
+          <div className='flex justify-between items-center'>
+            <input
+              className='input'
+              value={tempTravel}
+              onChange={(e) => setTempTravel(e.target.value)}
+            />
+            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
+          </div>
+        )}
+      </div>
+
+      {/* Day Section */}
+      <div className='mb-6 border-b-2 border-black'>
+        <label className='block text-lg font-medium mb-1'>Day</label>
+        {!editingDay ? (
+          <div className='flex justify-between items-center'>
+            <span>{userInfo.day}</span>
+            <CheckOutlined
+              onClick={() => {
+                setTempDay(userInfo.day)
+                setEditingDay(true)
+              }}
+              className='cursor-pointer'
+            />
+          </div>
+        ) : (
+          <div className='flex justify-between items-center'>
+            <input
+              className='input'
+              value={tempDay}
+              onChange={(e) => setTempDay(e.target.value)}
+            />
+            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
+          </div>
+        )}
+      </div>
+
       {/* Interests Section */}
-      <div className='mb-6'>
+      <div className='mb-6 border-b-2 border-black'>
         <h2 className='text-lg font-medium mb-2'>Interests</h2>
         <div className='flex flex-wrap'>
           {interests.map((interest: string) => (
@@ -186,7 +293,6 @@ const Profile = () => {
                   ? 'bg-red-500 text-white'
                   : 'bg-white border'
               }`}
-              onClick={() => toggleInterest(interest)}
             >
               {interest}
             </button>
