@@ -286,22 +286,22 @@ const Profile = () => {
         <h2 className='text-lg font-medium mb-2'>Interests</h2>
         <div className='flex flex-wrap'>
           {interests.map((interest: string) => (
-            <button
+            <div
               key={interest}
               className={`m-2 px-4 py-2 rounded ${
                 interests.includes(interest)
-                  ? 'bg-red-500 text-white'
+                  ? 'bg-buttonColor/100 text-white'
                   : 'bg-white border'
               }`}
             >
               {interest}
-            </button>
+            </div>
           ))}
         </div>
       </div>
 
       <button
-        className='bg-red-400 text-white px-6 py-2 rounded'
+        className='bg-red-300 text-white px-6 py-2 rounded'
         onClick={handleSignOut}
       >
         Sign Out
