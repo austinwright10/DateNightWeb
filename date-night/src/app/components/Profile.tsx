@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/utils/supabase/client'
 import { interestStore, userIDStore } from '@/app/stores/stores'
-import { CheckOutlined } from '@ant-design/icons'
+import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 
 interface UserInfo {
   name: string
@@ -160,13 +160,15 @@ const Profile = () => {
 
   return (
     <div className='container mx-auto px-4 py-10'>
-      <h1 className='text-3xl font-bold mb-6'>Profile</h1>
-
+      <div className='flex flex-row justify-between w-1/12 mb-7'>
+        <LeftOutlined height={30} width={30} />
+        <h1 className='text-3xl text-center font-bold'>Profile</h1>
+      </div>
       {/* Name Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Name</label>
+        <label className='block text-xl font-medium mb-2'>Name</label>
         <div className='flex justify-between items-center'>
-          <span>{`${userInfo.name}`}</span>
+          <span className='text-lg'>{`${userInfo.name}`}</span>
           {/* <CheckOutlined
             onClick={() => {
               setTempPhone(userInfo.phone_number)
@@ -178,11 +180,11 @@ const Profile = () => {
       </div>
 
       {/* Phone Number Section */}
-      <div className='mb-6  border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Phone Number</label>
+      <div className='mb-6 border-b-2 border-black'>
+        <label className='block text-xl font-medium mb-2'>Phone Number</label>
         {!editingPhone ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.phone_number}</span>
+            <span className='text-lg'>{userInfo.phone_number}</span>
             {/* <CheckOutlined
               onClick={() => {
                 setTempPhone(userInfo.phone_number)
@@ -205,10 +207,10 @@ const Profile = () => {
 
       {/* Budget Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Budget</label>
+        <label className='block text-xl font-medium mb-2'>Budget</label>
         {!editingBudget ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.budget}</span>
+            <span className='text-lg'>{userInfo.budget}</span>
             <CheckOutlined
               onClick={() => {
                 setTempBudget(userInfo.budget)
