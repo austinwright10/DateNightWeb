@@ -1,8 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/utils/supabase/client'
-import { interestStore, userIDStore } from '@/app/stores/stores'
-import { CheckOutlined } from '@ant-design/icons'
+import {
+  interestStore,
+  priceStore,
+  travelStore,
+  userIDStore,
+} from '@/app/stores/stores'
+import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 
 interface UserInfo {
   name: string
@@ -41,6 +46,8 @@ const Profile = () => {
   const [editingTravel, setEditingTravel] = useState(false)
   const [editingDay, setEditingDay] = useState(false)
 
+  const selectedPrice = priceStore((state: any) => state.price)
+  const selectedTravel = travelStore((state: any) => state.travel)
   const [tempPhone, setTempPhone] = useState('')
   const [tempLocation, setTempLocation] = useState('')
   const [tempBudget, setTempBudget] = useState('')
@@ -77,12 +84,14 @@ const Profile = () => {
       } else {
         if (data) {
           console.log('data here ', data)
+          const new_data = data.onboard.split(',')
+          console.log('new data ', new_data)
           setUserInfo({
             name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
-            budget: data.onboard.selectedPrice || '',
-            travel: data.onboard.selectedTravel || '',
+            budget: new_data[1] || '',
+            travel: new_data[2] || '',
             day: data.onboard.selectedDay || '',
             onboard: {
               selectedPrice: data.onboard.selectedPrice || '',
@@ -160,13 +169,15 @@ const Profile = () => {
 
   return (
     <div className='container mx-auto px-4 py-10'>
-      <h1 className='text-3xl font-bold mb-6'>Profile</h1>
-
+      <div className='flex flex-row justify-between w-1/12 mb-7'>
+        <LeftOutlined height={30} width={30} />
+        <h1 className='text-3xl text-center font-bold'>Profile</h1>
+      </div>
       {/* Name Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Name</label>
+        <label className='block text-xl font-medium mb-2'>Name</label>
         <div className='flex justify-between items-center'>
-          <span>{`${userInfo.name}`}</span>
+          <span className='text-lg'>{`${userInfo.name}`}</span>
           {/* <CheckOutlined
             onClick={() => {
               setTempPhone(userInfo.phone_number)
@@ -178,11 +189,11 @@ const Profile = () => {
       </div>
 
       {/* Phone Number Section */}
-      <div className='mb-6  border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Phone Number</label>
+      <div className='mb-6 border-b-2 border-black'>
+        <label className='block text-xl font-medium mb-2'>Phone Number</label>
         {!editingPhone ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.phone_number}</span>
+            <span className='text-lg'>{userInfo.phone_number}</span>
             {/* <CheckOutlined
               onClick={() => {
                 setTempPhone(userInfo.phone_number)
@@ -205,10 +216,10 @@ const Profile = () => {
 
       {/* Budget Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Budget</label>
+        <label className='block text-xl font-medium mb-2'>Budget</label>
         {!editingBudget ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.budget}</span>
+            <span className='text-lg'>{userInfo.budget}</span>
             <CheckOutlined
               onClick={() => {
                 setTempBudget(userInfo.budget)
@@ -231,10 +242,10 @@ const Profile = () => {
 
       {/* Travel Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Travel</label>
+        <label className='block text-xl font-medium mb-2'>Travel</label>
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.travel}</span>
+            <span className='text-lg'>{userInfo.travel}</span>
             <CheckOutlined
               onClick={() => {
                 setTempTravel(userInfo.travel)
@@ -257,10 +268,10 @@ const Profile = () => {
 
       {/* Day Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Day</label>
+        <label className='block text-xl font-medium mb-2'>Date Night</label>
         {!editingDay ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.day}</span>
+            <span className='text-lg'>{userInfo.day}</span>
             <CheckOutlined
               onClick={() => {
                 setTempDay(userInfo.day)
@@ -283,12 +294,12 @@ const Profile = () => {
 
       {/* Interests Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <h2 className='text-lg font-medium mb-2'>Interests</h2>
+        <h2 className='text-xl font-medium mb-2'>Interests</h2>
         <div className='flex flex-wrap'>
           {interests.map((interest: string) => (
             <div
               key={interest}
-              className={`m-2 px-4 py-2 rounded ${
+              className={`m-2 px-4 py-2 rounded text-lg ${
                 interests.includes(interest)
                   ? 'bg-buttonColor/100 text-white'
                   : 'bg-white border'

@@ -48,7 +48,7 @@ export default function Dashboard() {
             {previousDates.map((item: DateItem) => renderItem(item))}
           </div>
         ) : (
-          <p className='text-lg text-gray-600 text-center mt-4'>
+          <p className='text-lg text-gray-600 text-center p-10 '>
             Stay tuned for your first date!
           </p>
         )}
