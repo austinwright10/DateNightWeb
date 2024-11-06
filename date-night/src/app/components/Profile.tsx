@@ -1,7 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/utils/supabase/client'
-import { interestStore, userIDStore } from '@/app/stores/stores'
+import {
+  interestStore,
+  priceStore,
+  travelStore,
+  userIDStore,
+} from '@/app/stores/stores'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 
 interface UserInfo {
@@ -41,6 +46,8 @@ const Profile = () => {
   const [editingTravel, setEditingTravel] = useState(false)
   const [editingDay, setEditingDay] = useState(false)
 
+  const selectedPrice = priceStore((state: any) => state.price)
+  const selectedTravel = travelStore((state: any) => state.travel)
   const [tempPhone, setTempPhone] = useState('')
   const [tempLocation, setTempLocation] = useState('')
   const [tempBudget, setTempBudget] = useState('')
@@ -77,12 +84,14 @@ const Profile = () => {
       } else {
         if (data) {
           console.log('data here ', data)
+          const new_data = data.onboard.split(',')
+          console.log('new data ', new_data)
           setUserInfo({
             name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
-            budget: data.onboard.selectedPrice || '',
-            travel: data.onboard.selectedTravel || '',
+            budget: new_data[1] || '',
+            travel: new_data[2] || '',
             day: data.onboard.selectedDay || '',
             onboard: {
               selectedPrice: data.onboard.selectedPrice || '',
