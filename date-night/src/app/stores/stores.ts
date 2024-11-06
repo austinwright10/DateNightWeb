@@ -53,8 +53,8 @@ interface DateStore {
 
 export const useDateStore = create<DateStore>((set) => ({
   previousDates: [
-    { id: '1', title: 'hello' },
-    { id: '2', title: '2' },
+    // { id: '1', title: 'hello' },
+    // { id: '2', title: '2' },
   ],
   addDate: async (date) => {
     set((state) => {
