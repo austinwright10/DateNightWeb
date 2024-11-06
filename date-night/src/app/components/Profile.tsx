@@ -233,10 +233,10 @@ const Profile = () => {
 
       {/* Travel Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Travel</label>
+        <label className='block text-xl font-medium mb-2'>Travel</label>
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.travel}</span>
+            <span className='text-lg'>{userInfo.travel}</span>
             <CheckOutlined
               onClick={() => {
                 setTempTravel(userInfo.travel)
@@ -259,10 +259,10 @@ const Profile = () => {
 
       {/* Day Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <label className='block text-lg font-medium mb-1'>Day</label>
+        <label className='block text-xl font-medium mb-2'>Date Night</label>
         {!editingDay ? (
           <div className='flex justify-between items-center'>
-            <span>{userInfo.day}</span>
+            <span className='text-lg'>{userInfo.day}</span>
             <CheckOutlined
               onClick={() => {
                 setTempDay(userInfo.day)
@@ -285,12 +285,12 @@ const Profile = () => {
 
       {/* Interests Section */}
       <div className='mb-6 border-b-2 border-black'>
-        <h2 className='text-lg font-medium mb-2'>Interests</h2>
+        <h2 className='text-xl font-medium mb-2'>Interests</h2>
         <div className='flex flex-wrap'>
           {interests.map((interest: string) => (
             <div
               key={interest}
-              className={`m-2 px-4 py-2 rounded ${
+              className={`m-2 px-4 py-2 rounded text-lg ${
                 interests.includes(interest)
                   ? 'bg-buttonColor/100 text-white'
                   : 'bg-white border'
