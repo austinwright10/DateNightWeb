@@ -72,12 +72,13 @@ const Profile = () => {
         if (data) {
           console.log('data here ', data)
           const budget = data.budget.slice(1, -1)
+          const travel = data.travel.slice(1, -1)
           setUserInfo({
             name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
             budget: budget || '',
-            travel: data.travel || '',
+            travel: travel || '',
             day: data.day || '',
             interests: data.interests || [],
           })
@@ -204,7 +205,7 @@ const Profile = () => {
         <label className='block text-xl font-medium mb-2'>Travel</label>
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
-            <span className='text-lg'>{userInfo.travel}</span>
+            <span className='text-lg'>{userInfo.travel} mi.</span>
           </div>
         ) : (
           <div className='flex justify-between items-center'>
