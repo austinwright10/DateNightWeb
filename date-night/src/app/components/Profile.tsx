@@ -64,6 +64,7 @@ const Profile = () => {
 
   const fetchUserInfo = async () => {
     const { data: userData, error: userError } = await supabase.auth.getUser()
+    console.log('Price ', selectedPrice)
 
     if (userError) {
       console.log('Error fetching user:', userError)

@@ -85,13 +85,6 @@ export default function SignUp() {
         password: password,
       })
 
-      // if (data?.user) {
-      //   setID(data.user.id)
-      //   console.log('data id ', data.user.id)
-      // } else {
-      //   console.log('error here ', phoneNumber)
-      // }
-
       setIsModalVisible(true)
     } catch (error: any) {
       const zodErrors = error.errors.map((err: any) => err.path[0])
@@ -173,13 +166,6 @@ export default function SignUp() {
 
   async function goNext() {
     try {
-      const onboardData = {
-        selectedDay,
-        selectedPrice,
-        selectedTravel,
-        interests,
-      }
-      const onboardJSON = JSON.stringify(onboardData)
       const { data, error } = await supabase.auth.verifyOtp({
         phone: phoneNumber,
         token: otpValue,
@@ -201,7 +187,10 @@ export default function SignUp() {
               last_name: lastName,
               phone_number: formatPhoneNumber(phoneNumber),
               location: '',
-              onboard: onboardJSON,
+              budget: selectedPrice,
+              travel: selectedTravel,
+              day: selectedDay,
+              interests: interests,
             })
         }
         setIsModalVisible(false)
