@@ -171,13 +171,6 @@ const Profile = () => {
         {!editingPhone ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.phone_number}</span>
-            {/* <CheckOutlined
-              onClick={() => {
-                setTempPhone(userInfo.phone_number)
-                setEditingPhone(true)
-              }}
-              className='cursor-pointer'
-            /> */}
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -186,7 +179,6 @@ const Profile = () => {
               value={tempPhone}
               onChange={(e) => setTempPhone(e.target.value)}
             />
-            {/* <CheckOutlined onClick={handleSave} className='cursor-pointer' /> */}
           </div>
         )}
       </div>
@@ -197,13 +189,6 @@ const Profile = () => {
         {!editingBudget ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.budget}</span>
-            <CheckOutlined
-              onClick={() => {
-                setTempBudget(userInfo.budget)
-                setEditingBudget(true)
-              }}
-              className='cursor-pointer'
-            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -212,7 +197,6 @@ const Profile = () => {
               value={tempBudget}
               onChange={(e) => setTempBudget(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
@@ -223,13 +207,6 @@ const Profile = () => {
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.travel}</span>
-            <CheckOutlined
-              onClick={() => {
-                setTempTravel(userInfo.travel)
-                setEditingTravel(true)
-              }}
-              className='cursor-pointer'
-            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -238,7 +215,6 @@ const Profile = () => {
               value={tempTravel}
               onChange={(e) => setTempTravel(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
@@ -249,13 +225,6 @@ const Profile = () => {
         {!editingDay ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.day}</span>
-            <CheckOutlined
-              onClick={() => {
-                setTempDay(userInfo.day)
-                setEditingDay(true)
-              }}
-              className='cursor-pointer'
-            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -264,7 +233,6 @@ const Profile = () => {
               value={tempDay}
               onChange={(e) => setTempDay(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
