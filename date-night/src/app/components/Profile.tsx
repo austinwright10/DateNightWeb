@@ -16,12 +16,7 @@ interface UserInfo {
   budget: string
   travel: string
   day: string
-  onboard: {
-    selectedPrice: string
-    selectedTravel: string
-    selectedDay: string
-    interests: string[]
-  }
+  interests: string[]
 }
 
 const Profile = () => {
@@ -32,12 +27,7 @@ const Profile = () => {
     budget: '',
     travel: '',
     day: '',
-    onboard: {
-      selectedPrice: '',
-      selectedTravel: '',
-      selectedDay: '',
-      interests: [],
-    },
+    interests: [],
   })
 
   const [editingPhone, setEditingPhone] = useState(false)
@@ -64,7 +54,6 @@ const Profile = () => {
 
   const fetchUserInfo = async () => {
     const { data: userData, error: userError } = await supabase.auth.getUser()
-    console.log('Price ', selectedPrice)
 
     if (userError) {
       console.log('Error fetching user:', userError)
@@ -85,28 +74,21 @@ const Profile = () => {
       } else {
         if (data) {
           console.log('data here ', data)
-          const new_data = data.onboard.split(',')
-          console.log('new data ', new_data)
           setUserInfo({
             name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
-            budget: new_data[1] || '',
-            travel: new_data[2] || '',
-            day: data.onboard.selectedDay || '',
-            onboard: {
-              selectedPrice: data.onboard.selectedPrice || '',
-              selectedTravel: data.onboard.selectedTravel || '',
-              selectedDay: data.onboard.selectedDay || '',
-              interests: data.onboard.interests || [],
-            },
+            budget: data.budget || '',
+            travel: data.travel || '',
+            day: data.day || '',
+            interests: data.interests || [],
           })
 
           setTempPhone(data.phone_number || '')
           setTempLocation(data.location || '')
-          setTempBudget(data.onboard.selectedPrice || '')
-          setTempTravel(data.onboard.selectedTravel || '')
-          setTempDay(data.onboard.selectedDay || '')
+          setTempBudget(data.budget || '')
+          setTempTravel(data.travel || '')
+          setTempDay(data.day || '')
         }
       }
     } else {
@@ -124,13 +106,13 @@ const Profile = () => {
       updates.location = tempLocation
     }
     if (tempBudget !== userInfo.budget) {
-      updates.onboard = { ...userInfo.onboard, selectedPrice: tempBudget }
+      updates.budget = tempBudget
     }
     if (tempTravel !== userInfo.travel) {
-      updates.onboard = { ...userInfo.onboard, selectedTravel: tempTravel }
+      updates.travel = tempTravel
     }
     if (tempDay !== userInfo.day) {
-      updates.onboard = { ...userInfo.onboard, selectedDay: tempDay }
+      updates.day = tempDay
     }
 
     const { error } = await supabase
@@ -148,12 +130,6 @@ const Profile = () => {
         day: tempDay,
         budget: tempBudget,
         travel: tempTravel,
-        onboard: {
-          ...prev.onboard,
-          selectedPrice: tempBudget,
-          selectedTravel: tempTravel,
-          selectedDay: tempDay,
-        },
       }))
       setEditingPhone(false)
       setEditingLocation(false)
