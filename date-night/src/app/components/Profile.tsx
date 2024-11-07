@@ -16,12 +16,7 @@ interface UserInfo {
   budget: string
   travel: string
   day: string
-  onboard: {
-    selectedPrice: string
-    selectedTravel: string
-    selectedDay: string
-    interests: string[]
-  }
+  interests: string[]
 }
 
 const Profile = () => {
@@ -32,12 +27,7 @@ const Profile = () => {
     budget: '',
     travel: '',
     day: '',
-    onboard: {
-      selectedPrice: '',
-      selectedTravel: '',
-      selectedDay: '',
-      interests: [],
-    },
+    interests: [],
   })
 
   const [editingPhone, setEditingPhone] = useState(false)
@@ -84,28 +74,21 @@ const Profile = () => {
       } else {
         if (data) {
           console.log('data here ', data)
-          const new_data = data.onboard.split(',')
-          console.log('new data ', new_data)
           setUserInfo({
             name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
-            budget: new_data[1] || '',
-            travel: new_data[2] || '',
-            day: data.onboard.selectedDay || '',
-            onboard: {
-              selectedPrice: data.onboard.selectedPrice || '',
-              selectedTravel: data.onboard.selectedTravel || '',
-              selectedDay: data.onboard.selectedDay || '',
-              interests: data.onboard.interests || [],
-            },
+            budget: data.budget || '',
+            travel: data.travel || '',
+            day: data.day || '',
+            interests: data.interests || [],
           })
 
           setTempPhone(data.phone_number || '')
           setTempLocation(data.location || '')
-          setTempBudget(data.onboard.selectedPrice || '')
-          setTempTravel(data.onboard.selectedTravel || '')
-          setTempDay(data.onboard.selectedDay || '')
+          setTempBudget(data.budget || '')
+          setTempTravel(data.travel || '')
+          setTempDay(data.day || '')
         }
       }
     } else {
@@ -123,13 +106,13 @@ const Profile = () => {
       updates.location = tempLocation
     }
     if (tempBudget !== userInfo.budget) {
-      updates.onboard = { ...userInfo.onboard, selectedPrice: tempBudget }
+      updates.budget = tempBudget
     }
     if (tempTravel !== userInfo.travel) {
-      updates.onboard = { ...userInfo.onboard, selectedTravel: tempTravel }
+      updates.travel = tempTravel
     }
     if (tempDay !== userInfo.day) {
-      updates.onboard = { ...userInfo.onboard, selectedDay: tempDay }
+      updates.day = tempDay
     }
 
     const { error } = await supabase
@@ -147,12 +130,6 @@ const Profile = () => {
         day: tempDay,
         budget: tempBudget,
         travel: tempTravel,
-        onboard: {
-          ...prev.onboard,
-          selectedPrice: tempBudget,
-          selectedTravel: tempTravel,
-          selectedDay: tempDay,
-        },
       }))
       setEditingPhone(false)
       setEditingLocation(false)
@@ -194,13 +171,6 @@ const Profile = () => {
         {!editingPhone ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.phone_number}</span>
-            {/* <CheckOutlined
-              onClick={() => {
-                setTempPhone(userInfo.phone_number)
-                setEditingPhone(true)
-              }}
-              className='cursor-pointer'
-            /> */}
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -209,7 +179,6 @@ const Profile = () => {
               value={tempPhone}
               onChange={(e) => setTempPhone(e.target.value)}
             />
-            {/* <CheckOutlined onClick={handleSave} className='cursor-pointer' /> */}
           </div>
         )}
       </div>
@@ -220,13 +189,6 @@ const Profile = () => {
         {!editingBudget ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.budget}</span>
-            <CheckOutlined
-              onClick={() => {
-                setTempBudget(userInfo.budget)
-                setEditingBudget(true)
-              }}
-              className='cursor-pointer'
-            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -235,7 +197,6 @@ const Profile = () => {
               value={tempBudget}
               onChange={(e) => setTempBudget(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
@@ -246,13 +207,6 @@ const Profile = () => {
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.travel}</span>
-            <CheckOutlined
-              onClick={() => {
-                setTempTravel(userInfo.travel)
-                setEditingTravel(true)
-              }}
-              className='cursor-pointer'
-            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -261,7 +215,6 @@ const Profile = () => {
               value={tempTravel}
               onChange={(e) => setTempTravel(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
@@ -272,13 +225,6 @@ const Profile = () => {
         {!editingDay ? (
           <div className='flex justify-between items-center'>
             <span className='text-lg'>{userInfo.day}</span>
-            <CheckOutlined
-              onClick={() => {
-                setTempDay(userInfo.day)
-                setEditingDay(true)
-              }}
-              className='cursor-pointer'
-            />
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -287,7 +233,6 @@ const Profile = () => {
               value={tempDay}
               onChange={(e) => setTempDay(e.target.value)}
             />
-            <CheckOutlined onClick={handleSave} className='cursor-pointer' />
           </div>
         )}
       </div>
