@@ -36,8 +36,6 @@ const Profile = () => {
   const [editingTravel, setEditingTravel] = useState(false)
   const [editingDay, setEditingDay] = useState(false)
 
-  const selectedPrice = priceStore((state: any) => state.price)
-  const selectedTravel = travelStore((state: any) => state.travel)
   const [tempPhone, setTempPhone] = useState('')
   const [tempLocation, setTempLocation] = useState('')
   const [tempBudget, setTempBudget] = useState('')
@@ -46,7 +44,6 @@ const Profile = () => {
 
   const userID = userIDStore((state: any) => state.id)
   const interests = interestStore((state: any) => state.interests)
-  const setInterests = interestStore((state: any) => state.setInterests)
 
   useEffect(() => {
     fetchUserInfo()
@@ -74,12 +71,14 @@ const Profile = () => {
       } else {
         if (data) {
           console.log('data here ', data)
+          const budget = data.budget.slice(1, -1)
+          const travel = data.travel.slice(1, -1)
           setUserInfo({
             name: data.first_name + ' ' + data.last_name || '',
             phone_number: data.phone_number || '',
             location: data.location || '',
-            budget: data.budget || '',
-            travel: data.travel || '',
+            budget: budget || '',
+            travel: travel || '',
             day: data.day || '',
             interests: data.interests || [],
           })
@@ -188,7 +187,7 @@ const Profile = () => {
         <label className='block text-xl font-medium mb-2'>Budget</label>
         {!editingBudget ? (
           <div className='flex justify-between items-center'>
-            <span className='text-lg'>{userInfo.budget}</span>
+            <span className='text-lg'>${userInfo.budget}.00</span>
           </div>
         ) : (
           <div className='flex justify-between items-center'>
@@ -206,7 +205,7 @@ const Profile = () => {
         <label className='block text-xl font-medium mb-2'>Travel</label>
         {!editingTravel ? (
           <div className='flex justify-between items-center'>
-            <span className='text-lg'>{userInfo.travel}</span>
+            <span className='text-lg'>{userInfo.travel} mi.</span>
           </div>
         ) : (
           <div className='flex justify-between items-center'>
