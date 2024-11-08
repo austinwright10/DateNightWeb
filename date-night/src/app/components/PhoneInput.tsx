@@ -40,14 +40,11 @@ const PhoneInputWithCountry = ({
     setLocalPhoneNumber(value)
   }
 
-  // Handle country code selection
   const handleCountryChange = (code: string) => {
     setSelectedCountry(code)
   }
 
-  // Update parent component with formatted phone number
   useEffect(() => {
-    // Wait for user to finish typing (when number is likely complete)
     const timeoutId = setTimeout(() => {
       if (localPhoneNumber) {
         const fullNumber = `${selectedCountry}${localPhoneNumber}`
@@ -60,10 +57,8 @@ const PhoneInputWithCountry = ({
     return () => clearTimeout(timeoutId)
   }, [localPhoneNumber, selectedCountry, setPhoneNumber])
 
-  // Initialize local phone number from prop
   useEffect(() => {
     if (phoneNumber) {
-      // Remove any country code prefix from the phone number
       const withoutCountry = phoneNumber.replace(/^\+\d+/, '')
       setLocalPhoneNumber(withoutCountry)
     }
