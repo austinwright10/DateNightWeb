@@ -99,7 +99,7 @@ export default function DateNightSelection() {
       </div>
 
       <button
-        className={`mt-5 py-3 px-6 rounded-lg text-white bg-buttonColor ${
+        className={`mt-10 py-3 px-6 rounded-lg text-white bg-buttonColor ${
           selectedDay && selectedTime
             ? ' bg-buttonColor'
             : 'bg-red-300 cursor-not-allowed'
