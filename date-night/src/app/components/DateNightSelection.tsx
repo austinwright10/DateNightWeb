@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 const daysOfWeek = [
@@ -32,18 +31,15 @@ export default function DateNightSelection() {
     setSelectedDay(day)
   }
 
-  // useEffect(() => {
-  //   const day = localStorage.getItem('day')
-  //   setSelectedDay(day)
-  // })
-
   const handleContinue = () => {
     router.push('/onboarding/TravelAndPricePage')
   }
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen p-5'>
-      <h1 className='text-3xl font-medium text-black mb-5'>Day of the Week</h1>
+      <h1 className='text-3xl font-medium text-black mb-5 text-center'>
+        Day of the Week
+      </h1>
       <p className='text-lg text-gray-500 text-center mb-5 leading-relaxed'>
         Choose a day of the week that you&apos;d like to have your date night.
         You&apos;ll receive your date the morning of.
@@ -64,24 +60,25 @@ export default function DateNightSelection() {
           </button>
         ))}
       </div>
-      <div>
-        <p className='text-3xl font-medium text-black mb-5 mt-10'>
+      <div className='w-1/2 sm:w-1/3'>
+        <p className='text-3xl font-medium text-black mb-5 mt-10 text-center'>
           Time of Day
         </p>
-        <Select
-        // defaultValue={selectedCountry}
-        // onValueChange={handleCountryChange}
-        >
-          <SelectTrigger className='lg:w-full w-5/12 bg-white h-15'>
+        <Select>
+          <SelectTrigger className='w-full bg-white h-15'>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <div className='p-2'></div>
             <ScrollArea className='h-72'>
               {timesOfDay.map((time) => (
-                <SelectItem key={time} value={time}>
-                  <div className='flex items-center gap-2'>
-                    <span>{time}</span>
+                <SelectItem
+                  key={time}
+                  value={time}
+                  className='flex items-center justify-center'
+                >
+                  <div className='flex items-center justify-center w-full'>
+                    <span className='text-lg'>{time}</span>
                   </div>
                 </SelectItem>
               ))}
