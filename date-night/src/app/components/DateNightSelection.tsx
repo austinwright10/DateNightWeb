@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { dayOfWeekStore } from '@/app/stores/stores'
+import { dayOfWeekStore, timeOfDayStore } from '@/app/stores/stores'
 import { timesOfDay } from '@/utils/times'
 import {
   Select,
@@ -26,9 +26,14 @@ export default function DateNightSelection() {
   const router = useRouter()
   const selectedDay = dayOfWeekStore((state: any) => state.day)
   const setSelectedDay = dayOfWeekStore((state: any) => state.setDay)
+  const selectedTime = timeOfDayStore((state: any) => state.time)
+  const setSelectedTime = timeOfDayStore((state: any) => state.setTime)
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day)
+  }
+  const handleTimeChange = (code: string) => {
+    setSelectedTime(code)
   }
 
   const handleContinue = () => {
@@ -64,7 +69,7 @@ export default function DateNightSelection() {
         <p className='text-3xl font-medium text-black mb-5 mt-10 text-center'>
           Time of Day
         </p>
-        <Select>
+        <Select defaultValue={selectedTime} onValueChange={handleTimeChange}>
           <SelectTrigger className='w-full bg-white h-15'>
             <SelectValue />
           </SelectTrigger>
