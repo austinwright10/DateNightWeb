@@ -75,7 +75,7 @@ export default function DateNightSelection() {
         <p className='text-3xl font-medium text-black mb-5 mt-10 text-center'>
           Time of Day
         </p>
-        <Select defaultValue={selectedTime}>
+        <Select value={selectedTime} onValueChange={handleTimeChange}>
           <SelectTrigger className='w-full bg-white h-10'>
             <SelectValue />
           </SelectTrigger>
@@ -88,10 +88,7 @@ export default function DateNightSelection() {
                   value={time}
                   className='flex items-center justify-center'
                 >
-                  <div
-                    className='flex items-center justify-center w-full'
-                    onClick={() => handleTimeChange(time)}
-                  >
+                  <div className='flex items-center justify-center w-full'>
                     <span className='text-lg'>{time}</span>
                   </div>
                 </SelectItem>
@@ -103,10 +100,12 @@ export default function DateNightSelection() {
 
       <button
         className={`mt-5 py-3 px-6 rounded-lg text-white bg-buttonColor ${
-          selectedDay ? ' bg-buttonColor' : 'bg-red-300 cursor-not-allowed'
+          selectedDay && selectedTime
+            ? ' bg-buttonColor'
+            : 'bg-red-300 cursor-not-allowed'
         }`}
         onClick={handleContinue}
-        disabled={!selectedDay}
+        disabled={!selectedDay || !selectedTime}
       >
         Continue
       </button>
