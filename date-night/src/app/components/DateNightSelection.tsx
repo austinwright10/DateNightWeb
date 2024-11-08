@@ -35,7 +35,13 @@ export default function DateNightSelection() {
   const handleTimeChange = (code: string) => {
     setSelectedTime(code)
   }
-
+  useEffect(() => {
+    const time = localStorage.getItem('time')
+    if (time) {
+      const parsedTime = JSON.parse(time)
+      setSelectedTime(parsedTime.state.time)
+    }
+  })
   const handleContinue = () => {
     router.push('/onboarding/TravelAndPricePage')
   }
@@ -69,8 +75,8 @@ export default function DateNightSelection() {
         <p className='text-3xl font-medium text-black mb-5 mt-10 text-center'>
           Time of Day
         </p>
-        <Select defaultValue={selectedTime} onValueChange={handleTimeChange}>
-          <SelectTrigger className='w-full bg-white h-15'>
+        <Select defaultValue={selectedTime}>
+          <SelectTrigger className='w-full bg-white h-10'>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -82,7 +88,10 @@ export default function DateNightSelection() {
                   value={time}
                   className='flex items-center justify-center'
                 >
-                  <div className='flex items-center justify-center w-full'>
+                  <div
+                    className='flex items-center justify-center w-full'
+                    onClick={() => handleTimeChange(time)}
+                  >
                     <span className='text-lg'>{time}</span>
                   </div>
                 </SelectItem>

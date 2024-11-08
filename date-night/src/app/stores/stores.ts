@@ -14,7 +14,7 @@ export const dayOfWeekStore = create(
 export const timeOfDayStore = create(
   persist(
     (set) => ({
-      time: '8:00 PM',
+      time: '',
       setTime: (newTime: string) => set({ time: newTime }),
     }),
     { name: 'time', storage: createJSONStorage(() => localStorage) }
