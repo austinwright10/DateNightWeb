@@ -76,21 +76,12 @@ export default function DateNightSelection() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <div className='p-2'>
-              <Input
-                placeholder='Search countries...'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className='mb-2'
-              />
-            </div>
+            <div className='p-2'></div>
             <ScrollArea className='h-72'>
-              {filteredCountries.map((country) => (
-                <SelectItem key={country.code} value={country.code}>
+              {timesOfDay.map((time) => (
+                <SelectItem key={time} value={time}>
                   <div className='flex items-center gap-2'>
-                    <span>{country.flag}</span>
-                    <span className='font-medium'>{country.code}</span>
-                    <span className='text-sm'>{country.country}</span>
+                    <span>{time}</span>
                   </div>
                 </SelectItem>
               ))}
