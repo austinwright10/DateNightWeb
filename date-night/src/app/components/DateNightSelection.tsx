@@ -2,6 +2,16 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { dayOfWeekStore } from '@/app/stores/stores'
+import { timesOfDay } from '@/utils/times'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 const daysOfWeek = [
   { short: 'Su', full: 'Sunday' },
@@ -58,6 +68,35 @@ export default function DateNightSelection() {
         <p className='text-3xl font-medium text-black mb-5 mt-10'>
           Time of Day
         </p>
+        <Select
+        // defaultValue={selectedCountry}
+        // onValueChange={handleCountryChange}
+        >
+          <SelectTrigger className='lg:w-full w-5/12 bg-white h-15'>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <div className='p-2'>
+              <Input
+                placeholder='Search countries...'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className='mb-2'
+              />
+            </div>
+            <ScrollArea className='h-72'>
+              {filteredCountries.map((country) => (
+                <SelectItem key={country.code} value={country.code}>
+                  <div className='flex items-center gap-2'>
+                    <span>{country.flag}</span>
+                    <span className='font-medium'>{country.code}</span>
+                    <span className='text-sm'>{country.country}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </ScrollArea>
+          </SelectContent>
+        </Select>
       </div>
 
       <button
