@@ -33,7 +33,7 @@ export default function DateNightSelection() {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen p-5'>
-      <h1 className='text-3xl font-medium text-black mb-5'>Date Night</h1>
+      <h1 className='text-3xl font-medium text-black mb-5'>Day of the Week</h1>
       <p className='text-lg text-gray-500 text-center mb-5 leading-relaxed'>
         Choose a day of the week that you&apos;d like to have your date night.
         You&apos;ll receive your date the morning of.
@@ -53,6 +53,11 @@ export default function DateNightSelection() {
             {day.short}
           </button>
         ))}
+      </div>
+      <div>
+        <p className='text-3xl font-medium text-black mb-5 mt-10'>
+          Time of Day
+        </p>
       </div>
 
       <button
