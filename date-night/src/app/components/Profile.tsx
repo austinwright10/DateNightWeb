@@ -150,11 +150,17 @@ const Profile = () => {
 
   return (
     <div className='container mx-auto px-4 py-10'>
-      <div className='flex flex-row justify-between w-1/12 mb-7'>
-        <LeftOutlined height={30} width={30} onClick={() => router.push()} />
-        <h1 className='text-3xl text-center font-bold'>Profile</h1>
+      <div className='flex flex-row items-center mb-7 w-1/12'>
+        <div className='w-1/2'>
+          <LeftOutlined
+            onClick={() => router.push('/dashboard/DashboardPage')}
+            className='cursor-pointer'
+          />
+        </div>
+        <div className='flex-grow text-center'>
+          <h1 className='text-3xl font-bold'>Profile</h1>
+        </div>
       </div>
-      {/* Name Section */}
       <div className='mb-6 border-b-2 border-black'>
         <label className='block text-xl font-medium mb-2'>Name</label>
         <div className='flex justify-between items-center'>
