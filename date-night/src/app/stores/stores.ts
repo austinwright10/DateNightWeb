@@ -44,16 +44,26 @@ export const travelStore = create(
   )
 )
 
-export const interestStore = create((set) => ({
-  interests: [],
-  setInterests: (newInterest: any) =>
-    set((state: any) => {
-      const updatedInterests = state.interests.includes(newInterest)
-        ? state.interests.filter((interest: any) => interest !== newInterest)
-        : [...state.interests, newInterest]
-      return { interests: updatedInterests }
+export const interestStore = create(
+  persist(
+    (set) => ({
+      interests: [],
+      setInterests: (newInterest: any) =>
+        set((state: any) => {
+          const updatedInterests = state.interests.includes(newInterest)
+            ? state.interests.filter(
+                (interest: any) => interest !== newInterest
+              )
+            : [...state.interests, newInterest]
+          return { interests: updatedInterests }
+        }),
     }),
-}))
+    {
+      name: 'interests',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+)
 
 interface DateStore {
   previousDates: Array<{ id: string; title: string }>

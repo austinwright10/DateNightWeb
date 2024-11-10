@@ -74,7 +74,6 @@ const Profile = () => {
         console.log('Error fetching data for profile:', fetchError)
       } else {
         if (data) {
-          console.log('data here ', data)
           const budget = data.budget.slice(1, -1)
           const travel = data.travel.slice(1, -1)
           setUserInfo({
