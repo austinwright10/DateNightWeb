@@ -8,6 +8,7 @@ import {
   userIDStore,
 } from '@/app/stores/stores'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/navigation'
 
 interface UserInfo {
   name: string
@@ -16,6 +17,7 @@ interface UserInfo {
   budget: string
   travel: string
   day: string
+  time: string
   interests: string[]
 }
 
@@ -27,6 +29,7 @@ const Profile = () => {
     budget: '',
     travel: '',
     day: '',
+    time: '',
     interests: [],
   })
 
@@ -44,6 +47,7 @@ const Profile = () => {
 
   const userID = userIDStore((state: any) => state.id)
   const interests = interestStore((state: any) => state.interests)
+  const router = useRouter()
 
   useEffect(() => {
     fetchUserInfo()
@@ -80,6 +84,7 @@ const Profile = () => {
             budget: budget || '',
             travel: travel || '',
             day: data.day || '',
+            time: data.time || '',
             interests: data.interests || [],
           })
 
@@ -146,7 +151,7 @@ const Profile = () => {
   return (
     <div className='container mx-auto px-4 py-10'>
       <div className='flex flex-row justify-between w-1/12 mb-7'>
-        <LeftOutlined height={30} width={30} />
+        <LeftOutlined height={30} width={30} onClick={() => router.push()} />
         <h1 className='text-3xl text-center font-bold'>Profile</h1>
       </div>
       {/* Name Section */}
@@ -223,7 +228,9 @@ const Profile = () => {
         <label className='block text-xl font-medium mb-2'>Date Night</label>
         {!editingDay ? (
           <div className='flex justify-between items-center'>
-            <span className='text-lg'>{userInfo.day}</span>
+            <span className='text-lg'>
+              {userInfo.day} at {userInfo.time}
+            </span>
           </div>
         ) : (
           <div className='flex justify-between items-center'>

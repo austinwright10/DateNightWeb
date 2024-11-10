@@ -10,6 +10,7 @@ import {
   dayOfWeekStore,
   interestStore,
   priceStore,
+  timeOfDayStore,
   travelStore,
   userIDStore,
 } from '@/app/stores/stores'
@@ -38,8 +39,7 @@ export default function SignUp() {
   const selectedTravel = travelStore((state: any) => state.travel)
   const interests = interestStore((state: any) => state.interests)
   const geoDBKEY = process.env.NEXT_PUBLIC_GEODB_KEY!
-  const userID = userIDStore((state: any) => state.id)
-  const setID = userIDStore((state: any) => state.setID)
+  const selectedTime = timeOfDayStore((state: any) => state.time)
   const router = useRouter()
 
   const signUpSchema = z
@@ -190,6 +190,7 @@ export default function SignUp() {
               budget: selectedPrice,
               travel: selectedTravel,
               day: selectedDay,
+              time: selectedTime,
               interests: interests,
             })
         }
