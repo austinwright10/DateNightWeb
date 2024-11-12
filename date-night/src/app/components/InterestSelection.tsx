@@ -42,7 +42,7 @@ export default function InterestSelection() {
       <p className='text-lg text-gray-500 text-center mb-5'>
         Select your favorite activities and hobbies from the list below.
       </p>
-      <div className='flex flex-wrap justify-center w-3/4'>
+      <div className='flex flex-wrap justify-center w-full md:w-3/4'>
         {activities.map((activity) => (
           <button
             key={activity}

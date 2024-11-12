@@ -56,22 +56,25 @@ export default function DateNightSelection() {
         You&apos;ll receive your date the morning of.
       </p>
 
-      <div className='flex justify-center justify-between space-x-10'>
-        {daysOfWeek.map((day) => (
-          <button
-            key={day.short}
-            className={`p-3 border-b-2 ${
-              selectedDay === day.full
-                ? 'text-black border-black'
-                : 'text-gray-500 border-transparent'
-            }`}
-            onClick={() => handleDaySelect(day.full)}
-          >
-            {day.short}
-          </button>
-        ))}
+      <div className='w-full max-w-screen-sm overflow-x-auto'>
+        <div className='flex justify-between min-w-full px-2'>
+          {daysOfWeek.map((day) => (
+            <button
+              key={day.short}
+              className={`p-2 sm:p-3 border-b-2 text-sm sm:text-base ${
+                selectedDay === day.full
+                  ? 'text-black border-black'
+                  : 'text-gray-500 border-transparent'
+              }`}
+              onClick={() => handleDaySelect(day.full)}
+            >
+              {day.short}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className='w-1/2 sm:w-1/3'>
+
+      <div className='w-full sm:w-1/3'>
         <p className='text-3xl font-medium text-black mb-5 mt-10 text-center'>
           Time of Day
         </p>
