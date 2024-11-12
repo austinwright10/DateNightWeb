@@ -27,16 +27,14 @@ const PhoneInputWithCountry = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [localPhoneNumber, setLocalPhoneNumber] = useState('')
 
-  // Filter countries based on search query
   const filteredCountries = countryCodes.filter(
     (country) =>
       country.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
       country.code.includes(searchQuery)
   )
 
-  // Handle local phone number changes
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '') // Remove non-digits
+    const value = e.target.value.replace(/\D/g, '')
     setLocalPhoneNumber(value)
   }
 
@@ -52,7 +50,7 @@ const PhoneInputWithCountry = ({
       } else {
         setPhoneNumber('')
       }
-    }, 500) // 500ms delay
+    }, 500)
 
     return () => clearTimeout(timeoutId)
   }, [localPhoneNumber, selectedCountry, setPhoneNumber])
