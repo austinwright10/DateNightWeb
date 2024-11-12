@@ -106,7 +106,7 @@ const PhoneInputWithCountry = ({
           maxLength={15}
         />
         {localPhoneNumber && (
-          <div className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500'>
+          <div className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hidden md:block'>
             {selectedCountry + localPhoneNumber}
           </div>
         )}
