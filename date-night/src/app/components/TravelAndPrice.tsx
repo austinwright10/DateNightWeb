@@ -17,7 +17,7 @@ export default function TravelAndPrice() {
     <div className='flex flex-col items-center justify-center min-h-screen p-5'>
       <h1 className='text-3xl font-medium text-black mb-5'>Price and Travel</h1>
       <div className='w-3/5 flex flex-col items-center'>
-        <div className='mb-10 w-1/3'>
+        <div className='mb-10 w-full md:w-1/2'>
           <h2 className='text-xl text-gray-600 text-center mb-2'>
             What is your budget per date?
           </h2>
@@ -30,7 +30,7 @@ export default function TravelAndPrice() {
             onValueChange={(value) => setSelectedPrice(value)}
           />
         </div>
-        <div className='w-1/3'>
+        <div className=' w-full md:w-1/2'>
           <h2 className='text-xl text-gray-600 text-center mb-2'>
             How far are you willing to travel?
           </h2>
