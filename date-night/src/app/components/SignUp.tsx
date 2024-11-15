@@ -46,7 +46,7 @@ export default function SignUp() {
     .object({
       firstName: z.string().min(2),
       lastName: z.string().min(2),
-      //location: z.string().min(2),
+      location: z.string().min(2),
       phoneNumber: z.string().min(12).max(12),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
@@ -65,21 +65,55 @@ export default function SignUp() {
     setLocationError(false)
   }
 
-  const locationRegex = /^([A-Za-z\s]+),\s*([A-Z]{2})$/
-  const phoneRegex = /^[0-9]{10}$/
+  useEffect(() => {
+    if (firstName.length >= 2) {
+      setFirstNameError(false)
+    }
+  }, [firstName])
+
+  useEffect(() => {
+    if (lastName.length >= 2) {
+      setLastNameError(false)
+    }
+  }, [lastName])
+
+  useEffect(() => {
+    if (query.length >= 2) {
+      setLocationError(false)
+    }
+  }, [query])
+
+  useEffect(() => {
+    if (password.length >= 6) {
+      setPasswordError(false)
+    }
+  }, [password])
+
+  useEffect(() => {
+    if (confirmPassword === password && confirmPassword.length >= 6) {
+      setConfirmPasswordError(false)
+    }
+  }, [confirmPassword, password])
+
+  useEffect(() => {
+    if (phoneNumber.length >= 10) {
+      setPhoneError(false)
+    }
+  }, [phoneNumber])
 
   const handleSignUp = async () => {
     try {
+      resetErrors()
       const formData = {
         firstName,
         lastName,
-        location,
+        location: query,
         phoneNumber,
         password,
         confirmPassword,
       }
       signUpSchema.parse(formData)
-      resetErrors()
+
       const { data, error: signUpError } = await supabase.auth.signUp({
         phone: phoneNumber,
         password: password,
@@ -87,26 +121,27 @@ export default function SignUp() {
 
       setIsModalVisible(true)
     } catch (error: any) {
-      const zodErrors = error.errors.map((err: any) => err.path[0])
-      resetErrors()
+      if (error.errors) {
+        const zodErrors = error.errors.map((err: any) => err.path[0])
 
-      if (zodErrors.includes('firstName')) {
-        setFirstNameError(true)
-      }
-      if (zodErrors.includes('lastName')) {
-        setLastNameError(true)
-      }
-      if (!locationRegex.test(location)) {
-        setLocationError(true)
-      }
-      if (zodErrors.includes('phoneNumber') || !phoneRegex.test(phoneNumber)) {
-        setPhoneError(true)
-      }
-      if (zodErrors.includes('password')) {
-        setPasswordError(true)
-      }
-      if (zodErrors.includes('confirmPassword')) {
-        setConfirmPasswordError(true)
+        if (zodErrors.includes('firstName')) {
+          setFirstNameError(true)
+        }
+        if (zodErrors.includes('lastName')) {
+          setLastNameError(true)
+        }
+        if (zodErrors.includes('location')) {
+          setLocationError(true)
+        }
+        if (zodErrors.includes('phoneNumber')) {
+          setPhoneError(true)
+        }
+        if (zodErrors.includes('password')) {
+          setPasswordError(true)
+        }
+        if (zodErrors.includes('confirmPassword')) {
+          setConfirmPasswordError(true)
+        }
       }
     }
   }
@@ -265,7 +300,7 @@ export default function SignUp() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        {citySuggestions.length > 0 && (
+        {/* {citySuggestions.length > 0 && (
           <div className='bg-white rounded-lg mt-1'>
             {citySuggestions.map((suggestion) => (
               <div
@@ -281,11 +316,9 @@ export default function SignUp() {
               </div>
             ))}
           </div>
-        )}
+        )} */}
         {locationError && (
-          <p className='text-red-500 text-xs'>
-            *Location format: e.g. Dallas, TX
-          </p>
+          <p className='text-red-500 text-xs'>*Please enter a location</p>
         )}
         <input
           type='password'
