@@ -274,10 +274,14 @@ export default function SignUp() {
         {(firstNameError || lastNameError) && (
           <div className='flex flex-row text-red-500 text-xs mt-2 justify-between'>
             {firstNameError && (
-              <p>*First name needs to be longer than 2 characters</p>
+              <p className='fixed block'>
+                *First name needs to be longer than 2 characters
+              </p>
             )}
             {lastNameError && (
-              <p>*Last name needs to be longer than 2 characters</p>
+              <p className='fixed block'>
+                *Last name needs to be longer than 2 characters
+              </p>
             )}
           </div>
         )}
