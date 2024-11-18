@@ -3,26 +3,12 @@ import { useRouter } from 'next/navigation'
 import { interestStore } from '@/app/stores/stores'
 
 const activities = [
-  'Hiking',
-  'Reading',
-  'Cooking',
-  'Traveling',
-  'Photography',
-  'Gaming',
-  'Painting',
-  'Music',
-  'Gardening',
-  'Cycling',
-  'Dancing',
-  'Writing',
-  'Swimming',
-  'Yoga',
-  'Running',
-  'Fishing',
-  'Camping',
-  'Crafting',
-  'Fitness',
-  'Baking',
+  'Food and Dining',
+  'NightLife',
+  'Shopping',
+  'Arts and Entertainment',
+  'Recreation and Outdoors',
+  'Wellness and Fitness',
 ]
 
 export default function InterestSelection() {
