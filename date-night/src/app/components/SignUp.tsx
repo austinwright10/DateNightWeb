@@ -232,12 +232,11 @@ export default function SignUp() {
             throw insertError.message
           }
 
-          const response = await fetch('/pages/api/create-checkout-session', {
+          const response = await fetch('/api/create-checkout-session', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId: user?.id }), // Pass relevant user data
           })
 
           const { url } = await response.json()
