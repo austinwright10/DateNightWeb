@@ -228,6 +228,24 @@ export default function SignUp() {
               time: selectedTime,
               interests: interests,
             })
+          if (insertError) {
+            throw insertError.message
+          }
+
+          const response = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+
+          const { url } = await response.json()
+
+          if (!url) {
+            throw new Error('Failed to get Stripe checkout URL')
+          }
+
+          window.location.href = url
         }
         setIsModalVisible(false)
         router.push('/dashboard/DashboardPage')
