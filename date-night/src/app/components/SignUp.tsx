@@ -29,10 +29,11 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
   const [location, setLocation] = useState('')
+  const [state, setState] = useState('')
   const [locationError, setLocationError] = useState(false)
+  const [stateError, setStateError] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [citySuggestions, setCitySuggestions] = useState<string[]>([])
-  const [query, setQuery] = useState('')
   const [loading, setLoading] = useState(false)
   const selectedDay = dayOfWeekStore((state: any) => state.day)
   const selectedPrice = priceStore((state: any) => state.price)
@@ -47,6 +48,7 @@ export default function SignUp() {
       firstName: z.string().min(2),
       lastName: z.string().min(2),
       location: z.string().min(2),
+      state: z.string().min(2),
       phoneNumber: z.string().min(12).max(12),
       password: z.string().min(6),
       confirmPassword: z.string().min(6),
@@ -55,6 +57,16 @@ export default function SignUp() {
       message: 'passwords do not match',
       path: ['confirmPassword'],
     })
+    .refine(
+      (data) => {
+        const combinedLocation = formatLocation(data.location, data.state)
+        return combinedLocation.length >= 5
+      },
+      {
+        message: 'Invalid location format',
+        path: ['location'],
+      }
+    )
 
   function resetErrors() {
     setPhoneError(false)
@@ -63,6 +75,7 @@ export default function SignUp() {
     setConfirmPasswordError(false)
     setPasswordError(false)
     setLocationError(false)
+    setStateError(false)
   }
 
   useEffect(() => {
@@ -78,10 +91,16 @@ export default function SignUp() {
   }, [lastName])
 
   useEffect(() => {
-    if (query.length >= 2) {
+    if (location.length >= 2) {
       setLocationError(false)
     }
-  }, [query])
+  }, [location])
+
+  useEffect(() => {
+    if (state.length >= 2) {
+      setStateError(false)
+    }
+  })
 
   useEffect(() => {
     if (password.length >= 6) {
@@ -107,7 +126,8 @@ export default function SignUp() {
       const formData = {
         firstName,
         lastName,
-        location: query,
+        location,
+        state,
         phoneNumber,
         password,
         confirmPassword,
@@ -133,6 +153,9 @@ export default function SignUp() {
         if (zodErrors.includes('location')) {
           setLocationError(true)
         }
+        if (zodErrors.includes('state')) {
+          setStateError(true)
+        }
         if (zodErrors.includes('phoneNumber')) {
           setPhoneError(true)
         }
@@ -146,44 +169,6 @@ export default function SignUp() {
     }
   }
 
-  const fetchCities = async (query: string) => {
-    if (!query) {
-      setCitySuggestions([])
-      return
-    }
-    setLoading(true)
-    try {
-      const response = await fetch(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}`,
-        {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-            'x-rapidapi-key': geoDBKEY,
-          },
-        }
-      )
-      const data = await response.json()
-      if (data && data.data) {
-        const cities = data.data.map(
-          (city: any) => `${city.city}, ${city.regionCode}`
-        )
-        setCitySuggestions(cities)
-      } else {
-        setCitySuggestions([])
-      }
-    } catch (error) {
-      console.error(error)
-    }
-    setLoading(false)
-  }
-
-  const debouncedFetchCities = useCallback(
-    debounce((query: string) => {
-      fetchCities(query)
-    }, 1000),
-    []
-  )
   function formatPhoneNumber(phoneNumber: string): string {
     const cleaned = ('' + phoneNumber).replace(/\D/g, '')
     const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
@@ -195,9 +180,10 @@ export default function SignUp() {
     return phoneNumber
   }
 
-  useEffect(() => {
-    debouncedFetchCities(query)
-  }, [query])
+  const formatLocation = (city: string, state: string): string => {
+    if (!city || !state) return ''
+    return `${city}, ${state}`.trim()
+  }
 
   async function goNext() {
     try {
@@ -206,6 +192,7 @@ export default function SignUp() {
         token: otpValue,
         type: 'sms',
       })
+
       if (error) {
         throw error.message
       } else {
@@ -214,6 +201,8 @@ export default function SignUp() {
         } = await supabase.auth.getUser()
 
         if (data) {
+          const combinedLocation = formatLocation(location, state)
+
           const { error: insertError } = await supabase
             .from('user_onboarding')
             .upsert({
@@ -221,13 +210,14 @@ export default function SignUp() {
               first_name: firstName,
               last_name: lastName,
               phone_number: formatPhoneNumber(phoneNumber),
-              location: '',
+              location: combinedLocation,
               budget: selectedPrice,
               travel: selectedTravel,
               day: selectedDay,
               time: selectedTime,
               interests: interests,
             })
+
           if (insertError) {
             throw insertError.message
           }
@@ -315,32 +305,27 @@ export default function SignUp() {
         )}
         <input
           type='text'
-          placeholder='City (e.g. New York, NY)'
+          placeholder='City (e.g. Dallas)'
           className={`w-full p-4 bg-white rounded-lg ${
             locationError && 'border-2 border-red-500'
           }`}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
         />
-        {/* {citySuggestions.length > 0 && (
-          <div className='bg-white rounded-lg mt-1'>
-            {citySuggestions.map((suggestion) => (
-              <div
-                key={suggestion}
-                className='p-2 cursor-pointer hover:bg-gray-200'
-                onClick={() => {
-                  setLocation(suggestion)
-                  setCitySuggestions([])
-                  setQuery(suggestion)
-                }}
-              >
-                {suggestion}
-              </div>
-            ))}
-          </div>
-        )} */}
         {locationError && (
           <p className='text-red-500 text-xs'>*Please enter a location</p>
+        )}
+        <input
+          type='text'
+          placeholder='State (e.g. Texas)'
+          className={`w-full p-4 bg-white rounded-lg ${
+            stateError && 'border-2 border-red-500'
+          }`}
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+        />
+        {stateError && (
+          <p className='text-red-500 text-xs'>*Please enter a valid State</p>
         )}
         <input
           type='password'
