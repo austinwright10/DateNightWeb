@@ -1,4 +1,4 @@
-#DateNightWeb
+# DateNightWeb
 Date Night is a web-based application designed to help couples and loved ones create meaningful connections by providing personalized date ideas. With Date Night, users can subscribe to a service that delivers weekly personalized text messages tailored to their preferences, interests, and location. These messages include creative and thoughtful date suggestions that make planning quality time effortless and enjoyable.
 
 Features
