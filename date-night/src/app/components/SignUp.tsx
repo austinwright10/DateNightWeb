@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import Modal from '@/app/components/Modal'
 import { z } from 'zod'
 import debounce from 'lodash/debounce'
-//import OTPModal from '../components/OTPModal'
 import { supabase } from '@/utils/supabase/client'
 import {
   dayOfWeekStore,
@@ -12,7 +11,6 @@ import {
   priceStore,
   timeOfDayStore,
   travelStore,
-  userIDStore,
 } from '@/app/stores/stores'
 import PhoneInput from '@/app/components/PhoneInput'
 
@@ -22,7 +20,7 @@ export default function SignUp() {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [otpValue, setOtpValue] = useState('') // State for OTP
+  const [otpValue, setOtpValue] = useState('')
   const [phoneError, setPhoneError] = useState(false)
   const [firstNameError, setFirstNameError] = useState(false)
   const [lastNameError, setLastNameError] = useState(false)
@@ -33,8 +31,6 @@ export default function SignUp() {
   const [locationError, setLocationError] = useState(false)
   const [stateError, setStateError] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [citySuggestions, setCitySuggestions] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
   const selectedDay = dayOfWeekStore((state: any) => state.day)
   const selectedPrice = priceStore((state: any) => state.price)
   const selectedTravel = travelStore((state: any) => state.travel)
