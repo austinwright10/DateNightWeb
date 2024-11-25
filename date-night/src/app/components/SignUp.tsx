@@ -150,8 +150,8 @@ export default function SignUp() {
         phone: phoneNumber,
         password: password,
       })
-      const new_pass = await hashPasswordOnServer(password)
-      setHashedPassword(new_pass)
+      // const new_pass = await hashPasswordOnServer(password)
+      // setHashedPassword(new_pass)
 
       setIsModalVisible(true)
     } catch (error: any) {
@@ -200,6 +200,7 @@ export default function SignUp() {
   }
 
   async function goNext() {
+    console.log('go next ', goNext)
     try {
       const { data, error } = await supabase.auth.verifyOtp({
         phone: phoneNumber,
@@ -252,7 +253,7 @@ export default function SignUp() {
           window.location.href = url
         }
         setIsModalVisible(false)
-        router.push('/dashboard/DashboardPage')
+        //router.push('/dashboard/DashboardPage')
       }
     } catch (error: any) {
       console.log('error ', error)

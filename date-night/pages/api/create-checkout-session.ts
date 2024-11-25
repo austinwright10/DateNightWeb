@@ -1,5 +1,3 @@
-// pages/api/create-checkout-session.js
-
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const stripe = require('stripe')(
