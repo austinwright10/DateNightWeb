@@ -28,6 +28,7 @@ export default function SignUp() {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
   const [location, setLocation] = useState('')
   const [state, setState] = useState('')
+  const [hashedPassword, setHashedPassword] = useState('')
   const [locationError, setLocationError] = useState(false)
   const [stateError, setStateError] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -116,7 +117,22 @@ export default function SignUp() {
     }
   }, [phoneNumber])
 
-  const handleSignUp = async () => {
+  async function hashPasswordOnServer(password: string) {
+    const response = await fetch('/api/hashpassword', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to hash password')
+    }
+
+    const data = await response.json()
+    return data.hashedPassword
+  }
+
+  async function handleSignUp() {
     try {
       resetErrors()
       const formData = {
@@ -134,6 +150,8 @@ export default function SignUp() {
         phone: phoneNumber,
         password: password,
       })
+      const new_pass = await hashPasswordOnServer(password)
+      setHashedPassword(new_pass)
 
       setIsModalVisible(true)
     } catch (error: any) {
