@@ -18,7 +18,7 @@ export default async function handler(
           },
         ],
         mode: 'subscription',
-        success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/dashboard/DashboardPage?success=true&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/cancel`,
         automatic_tax: { enabled: true },
       })
