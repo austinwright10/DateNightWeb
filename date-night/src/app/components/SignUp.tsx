@@ -28,6 +28,7 @@ export default function SignUp() {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
   const [location, setLocation] = useState('')
   const [state, setState] = useState('')
+  const [hashedPassword, setHashedPassword] = useState('')
   const [locationError, setLocationError] = useState(false)
   const [stateError, setStateError] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -149,8 +150,8 @@ export default function SignUp() {
         phone: phoneNumber,
         password: password,
       })
-      const p = hashPasswordOnServer(password)
-      console.log('p ', p)
+      const new_pass = await hashPasswordOnServer(password)
+      setHashedPassword(new_pass)
 
       setIsModalVisible(true)
     } catch (error: any) {
