@@ -1,12 +1,28 @@
 'use client'
+import { supabase } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 
 export default function Cancel() {
   const router = useRouter()
 
-  const handleResubscribe = () => {
-    // Redirect to subscription page or trigger subscription flow
-    router.push('/subscribe')
+  const handleResubscribe = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const { url } = await response.json()
+
+    if (!url) {
+      throw new Error('Failed to get Stripe checkout URL')
+    }
+
+    window.location.href = url
   }
 
   return (
