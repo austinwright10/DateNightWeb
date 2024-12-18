@@ -3,5 +3,9 @@ export default function OnboardLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <main className='bg-background'>{children}</main>
+  return (
+    <main className='bg-gradient-to-t from-background to-pink-100'>
+      {children}
+    </main>
+  )
 }
