@@ -10,7 +10,7 @@ import Romance from '@/app/public/romance.json'
 export default function Home() {
   const router = useRouter()
   return (
-    <div className='bg-gradient-to-t from-background to-pink-100'>
+    <div className='bg-gradient-to-t from-pink-100 to-background'>
       <div className='flex flex-col items-center min-h-screen'>
         <div className='w-full py-20'>
           <div className='container mx-auto px-4 text-center'>
