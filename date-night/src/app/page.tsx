@@ -1,6 +1,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import Lottie from 'lottie-react'
+import Heart from '@/app/public/heart.json'
 
 export default function Home() {
   const router = useRouter()
@@ -34,16 +36,19 @@ export default function Home() {
                 title='Personalized Ideas'
                 description='Get custom date suggestions based on your interests, budget, and location'
                 icon='/icons/personalize.svg'
+                type='image'
               />
               <FeatureCard
                 title='Never Run Out of Ideas'
                 description='Access hundreds of unique date ideas, from romantic dinners to adventure activities'
                 icon='/icons/ideas.svg'
+                type='image'
               />
               <FeatureCard
                 title='Save Favorites'
                 description='Keep track of your favorite date ideas and create your dating bucket list'
-                icon='/icons/favorite.svg'
+                icon={Heart}
+                type='lottie'
               />
             </div>
           </div>
@@ -98,14 +103,30 @@ const FeatureCard = ({
   title,
   description,
   icon,
+  type = 'image',
 }: {
   title: string
   description: string
-  icon: string
+  icon: string | any
+  type?: 'image' | 'lottie'
 }) => (
   <div className='text-center p-6 rounded-lg bg-gray-50'>
-    <div className='w-16 h-16 mx-auto mb-4'>
-      <Image src={icon} alt={title} width={64} height={64} />
+    <div
+      className={`mx-auto mb-4 ${
+        type === 'lottie'
+          ? 'h-32 flex items-center justify-center'
+          : 'w-16 h-16'
+      }`}
+    >
+      {type === 'image' ? (
+        <Image src={icon} alt={title} width={64} height={64} />
+      ) : (
+        <Lottie
+          animationData={icon}
+          loop={true}
+          style={{ width: 200, height: 200 }}
+        />
+      )}
     </div>
     <h3 className='text-xl font-semibold mb-2'>{title}</h3>
     <p className='text-gray-600'>{description}</p>
