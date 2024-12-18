@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Lottie from 'lottie-react'
 import Heart from '@/app/public/heart.json'
 import Couple from '@/app/public/couple.json'
+import Travel from '@/app/public/travel.json'
+import Romance from '@/app/public/romance.json'
 
 export default function Home() {
   const router = useRouter()
@@ -42,8 +44,8 @@ export default function Home() {
               <FeatureCard
                 title='Never Run Out of Ideas'
                 description='Access hundreds of unique date ideas, from romantic dinners to adventure activities'
-                icon='/icons/ideas.svg'
-                type='image'
+                icon={Travel}
+                type='lottie'
               />
               <FeatureCard
                 title='Save Favorites'
@@ -61,12 +63,16 @@ export default function Home() {
               How It Works
             </h2>
             <div className='grid md:grid-cols-2 gap-12 items-center'>
-              <div className='relative h-[400px]'>
-                <Image
-                  src='/images/app-preview.jpg'
-                  alt='Date Night App Preview'
-                  fill
-                  className='object-contain rounded-lg shadow-lg'
+              <div className='relative h-[400px] flex items-center justify-center'>
+                <Lottie
+                  animationData={Romance}
+                  loop
+                  autoplay
+                  style={{
+                    width: 500,
+                    height: 500,
+                    backgroundColor: 'transparent',
+                  }}
                 />
               </div>
               <div className='space-y-6'>
