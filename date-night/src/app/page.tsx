@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Lottie from 'lottie-react'
 import Heart from '@/app/public/heart.json'
+import Couple from '@/app/public/couple.json'
 
 export default function Home() {
   const router = useRouter()
@@ -35,8 +36,8 @@ export default function Home() {
               <FeatureCard
                 title='Personalized Ideas'
                 description='Get custom date suggestions based on your interests, budget, and location'
-                icon='/icons/personalize.svg'
-                type='image'
+                icon={Couple}
+                type='lottie'
               />
               <FeatureCard
                 title='Never Run Out of Ideas'
@@ -124,7 +125,7 @@ const FeatureCard = ({
         <Lottie
           animationData={icon}
           loop={true}
-          style={{ width: 200, height: 200 }}
+          style={{ width: 220, height: 200 }}
         />
       )}
     </div>
