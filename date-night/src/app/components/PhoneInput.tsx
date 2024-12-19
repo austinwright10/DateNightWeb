@@ -45,7 +45,7 @@ const PhoneInputWithCountry = ({
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (localPhoneNumber) {
-        const fullNumber = `${selectedCountry}${localPhoneNumber}`
+        const fullNumber = `+1${localPhoneNumber}`
         setPhoneNumber(fullNumber)
       } else {
         setPhoneNumber('')
@@ -64,7 +64,7 @@ const PhoneInputWithCountry = ({
 
   return (
     <div className='flex gap-10 w-full'>
-      <Select
+      {/* <Select
         defaultValue={selectedCountry}
         onValueChange={handleCountryChange}
       >
@@ -92,7 +92,7 @@ const PhoneInputWithCountry = ({
             ))}
           </ScrollArea>
         </SelectContent>
-      </Select>
+      </Select> */}
 
       <div className='relative w-full'>
         <input
