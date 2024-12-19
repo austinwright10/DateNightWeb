@@ -34,7 +34,7 @@ export default function Home() {
             <h2 className='text-3xl font-bold text-center mb-12'>
               Why Choose Date Night?
             </h2>
-            <div className='grid md:grid-cols-3 gap-8'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8'>
               <FeatureCard
                 title='Personalized Ideas'
                 description='Get custom date suggestions based on your interests, budget, and location'
@@ -62,15 +62,16 @@ export default function Home() {
             <h2 className='text-3xl font-bold text-center mb-12'>
               How It Works
             </h2>
-            <div className='grid md:grid-cols-2 gap-12 items-center'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
               <div className='relative h-[400px] flex items-center justify-center'>
                 <Lottie
                   animationData={Romance}
                   loop
                   autoplay
                   style={{
-                    width: 500,
-                    height: 500,
+                    width: '100%',
+                    height: 'auto',
+                    maxWidth: 500,
                     backgroundColor: 'transparent',
                   }}
                 />
