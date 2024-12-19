@@ -261,7 +261,7 @@ export default function SignUp() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-background w-screen'>
+    <div className='flex flex-col items-center justify-center min-h-screen w-screen'>
       <Modal
         isOpen={isModalVisible}
         onBack={() => setIsModalVisible(false)}
